@@ -102,8 +102,11 @@ python3 -m http.server 8000
 
 ### 4. 部署到生产环境
 ```bash
-# 一键推送并部署
-./push
+# 方法一：一键构建并推送（推荐）
+python3 app.py
+
+# 方法二：仅推送（如果HTML已生成）
+python3 scripts/push.py
 ```
 
 ## 快速开始
@@ -121,8 +124,7 @@ cd iamcheyan.github.io
 
 ### 修改内容
 1. 编辑 `data/content_zh.json` 或 `data/content_jp.json`
-2. 运行 `python3 app.py` 重新生成网站
-3. 运行 `./push` 推送到GitHub
+2. 运行 `python3 app.py` 一键构建并推送到GitHub
 
 ### 自定义配置
 - **远程仓库**: 修改 `scripts/push.py` 中的 `--remote` 参数
