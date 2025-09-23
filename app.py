@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import argparse
 import json
 import re
 import subprocess
@@ -320,6 +321,30 @@ def auto_push() -> None:
         print("⚠️  推送脚本未找到，跳过自动推送")
 
 
-if __name__ == "__main__":
+def main() -> None:
+    """主函数，支持命令行参数"""
+    parser = argparse.ArgumentParser(
+        description="生成静态HTML页面，可选择是否推送到GitHub"
+    )
+    parser.add_argument(
+        "push",
+        nargs="?",
+        const="push",
+        help="添加此参数将自动推送到GitHub（例如: python3 app.py push）"
+    )
+    
+    args = parser.parse_args()
+    should_push = args.push is not None
+    
+    # 构建页面
     build_pages()
-    auto_push()
+    
+    # 根据参数决定是否推送
+    if should_push:
+        auto_push()
+    else:
+        print("💡 提示: 使用 'python3 app.py push' 来自动推送到GitHub")
+
+
+if __name__ == "__main__":
+    main()
