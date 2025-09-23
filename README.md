@@ -1,4 +1,5 @@
-# Cheyan's Personal Website
+# [https://iamcheyan.com](https://iamcheyan.com)
+
 [日本語](#日本語)  /  [中文](#中文)  / [English](#english)
 
 ---
