@@ -25,6 +25,8 @@
     "email_link": "mailto:me@iamcheyan.com"
   },
   "resume_download_text": "履歴書をダウンロード（PDF）",
+  "github_project_link": "GitHubリポジトリでこのプロジェクトを確認",
+  "github_project_url": "https://github.com/iamcheyan/iamcheyan.github.io",
   "books": {
     "list": [
       {

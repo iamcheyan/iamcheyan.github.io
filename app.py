@@ -87,6 +87,7 @@ def replace_template_placeholders(template: str, data: dict, lang_config: dict) 
         'contact-email-label': data.get("contact", {}).get("email_label", ""),
         'contact-email': data.get("contact", {}).get("email", ""),
         'resume-download-btn': data.get("resume_download_text", ""),
+        'github-project-link': data.get("github_project_link", ""),
     }
     
     for element_id, content in replacements.items():
@@ -126,10 +127,13 @@ def replace_template_placeholders(template: str, data: dict, lang_config: dict) 
     # 替换链接属性
     twitter_link = data.get("contact", {}).get("twitter_link", "#")
     email_link = data.get("contact", {}).get("email_link", "#")
+    github_project_url = data.get("github_project_url", "#")
     if twitter_link != "#":
         template = re.sub(r'(id="contact-twitter"[^>]*href=")[^"]*(")', rf'\1{html_attr(twitter_link)}\2', template)
     if email_link != "#":
         template = re.sub(r'(id="contact-email"[^>]*href=")[^"]*(")', rf'\1{html_attr(email_link)}\2', template)
+    if github_project_url != "#":
+        template = re.sub(r'(id="github-project-link"[^>]*href=")[^"]*(")', rf'\1{html_attr(github_project_url)}\2', template)
     
     # 生成并替换项目列表
     web_projects_html = render_web_projects(data.get("web_project_list", []))

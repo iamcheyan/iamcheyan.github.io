@@ -1,12 +1,3 @@
-# Cheyan's Personal Website / 澈言个人网站 / 徹言の個人ウェブサイト
-
-## Language / 语言 / 言語
-- [English](README_en.md)
-- [中文](README_zh.md)
-- [日本語](README_ja.md)
-
----
-
 # 澈言 (Cheyan) 个人网站
 
 欢迎来到澈言的个人网站项目！这是一个现代化的静态网站，展示我的技术背景、作品集和成就。
@@ -45,8 +36,7 @@ iamcheyan.com/
 │   └── *.png/*.jpg       # 图片资源
 ├── index.template.html    # HTML模板文件
 ├── app.py                 # 主构建脚本
-├── push                   # 便捷推送脚本
-└── README.md             # 项目说明（本文件）
+└── README_*.md           # 多语言说明文件
 ```
 
 ## 网站工作原理
@@ -67,7 +57,7 @@ iamcheyan.com/
 ### 3. 自动化构建流程
 1. 修改 `data/` 目录下的JSON内容文件
 2. 运行 `python3 app.py` 生成静态HTML
-3. 使用 `./push` 脚本推送到GitHub
+3. 自动推送到GitHub Pages
 
 ## GitHub托管
 

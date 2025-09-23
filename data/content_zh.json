@@ -24,6 +24,8 @@
     "email_link": "mailto:me@iamcheyan.com"
   },
   "resume_download_text": "下载简历（PDF）",
+  "github_project_link": "在GitHub仓库里查看本项目",
+  "github_project_url": "https://github.com/iamcheyan/iamcheyan.github.io",
   "books": {
     "list": [
       {
