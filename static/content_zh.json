@@ -1,0 +1,530 @@
+{
+  "site_title": "🧐  澈言 CHEYAN",
+  "about": {
+    "title": "澈言 cheyan",
+    "subtitle": "程序员、作家、互联网从业者",
+    "desc": "美读签约作者、豆瓣阅读作者、简书推荐作者，出版数本图书作品",
+    "me_title": "关于我<b>About Me</b>",
+    "me_content": "<h4>澈言｜程序员・作家・编剧</h4> <section id=\"profile\"><p>\n  2009年起从事全栈开发，使用 Python（Flask・PyWebIO・Streamlit）、JavaScript（ES6+）、MySQL 等技术栈。2014年创办公司并获得投资，具备团队管理与项目落地经验。跨界出版多本图书，涵盖个人成长、科技趋势等主题，并在中国各高校和书店举办线下活动，参与影视剧编剧与制片，积累了跨领域协作与创意实现能力。现希望在日本从事 Web 开发及相关岗位，发挥自身技术专长与多元背景，为产品创新和团队发展贡献更大价值。\n</p>\n</section>\n\n<section id=\"skills\">\n </section>"
+  },
+  "titles": {
+    "about_title": "澈言 cheyan",
+    "contact_title": "联系方式<b>Contact me</b>",
+    "projects_books_title": "项目<b>My projects</b>",
+    "books_title": "出版物<b>My achievements</b>",
+    "projects_title": "其他参与项目<b>Other projects</b>",
+    "events_title": "媒体报道<b>About me in the media</b>"
+  },
+  "contact": {
+    "twitter_label": "",
+    "twitter": "x.com/iamcheyan",
+    "twitter_link": "https://x.com/iamcheyan",
+    "email_label": "",
+    "email": "me@iamcheyan.com",
+    "email_link": "mailto:me@iamcheyan.com"
+  },
+  "resume_download_text": "下载简历（PDF）",
+  "books": {
+    "list": [
+      {
+        "title": "在别人的地图上，找不到自己的路",
+        "publisher": "台湾沐光文化有限公司",
+        "isbn": "9789869942508",
+        "date": "2020年4月",
+        "link": "https://www.books.com.tw/products/0010885446",
+        "img": "static/1e9272132.png",
+        "extra": "<a href=\"https://www.books.com.tw/products/E050089929\" target=\"_blank\">提供数字版本阅读</a>"
+      },
+      {
+        "title": "区块链风云",
+        "publisher": "辽宁人民出版社",
+        "isbn": "9787205099527",
+        "date": "2020年10月",
+        "link": "https://book.douban.com/subject/35216411/",
+        "img": "static/1881ddbd3.png",
+        "extra": "相关影视版权洽谈中"
+      },
+      {
+        "title": "别去抱怨生活的苦，那是去看世界的路",
+        "publisher": "江苏凤凰文艺出版社",
+        "isbn": "9787559429100",
+        "date": "2018年11月",
+        "link": "https://book.douban.com/subject/30336323/",
+        "img": "static/d9dd49c2e.png",
+        "extra": "<a href=\"https://www.ximalaya.com/youshengshu/18708996/\" target=\"_blank\">有声版权已授权喜马拉雅</a>"
+      },
+      {
+        "title": "王牌创业者：风口游戏",
+        "publisher": "百花洲文艺出版社",
+        "isbn": "9787550025387",
+        "date": "2018年2月",
+        "link": "https://book.douban.com/subject/27592545/",
+        "img": "static/b1fc0c8b0.png",
+        "extra": "影视版权已授权爱奇艺<br><a href=\"https://www.ximalaya.com/youshengshu/31077210/\" target=\"_blank\">有声版权已授权北京人民广播电台</a>"
+      },
+      {
+        "title": "这世界正在遗忘不改变的人",
+        "publisher": "北京联合出版公司",
+        "isbn": "9787559602404",
+        "date": "2017年5月",
+        "link": "https://book.douban.com/subject/27031444/",
+        "img": "static/49b4e02ab.png",
+        "extra": "<a href=\"https://www.ximalaya.com/youshengshu/25457976/\" target=\"_blank\">有声版权已授权喜马拉雅</a>"
+      },
+      {
+        "title": "世界正在惩罚你这样的人",
+        "publisher": "中国法制出版社",
+        "isbn": "9787509391037",
+        "date": "2018年3月",
+        "link": "https://book.douban.com/subject/30242395/",
+        "img": "static/06988e8c2.png",
+        "extra": "与李尚龙等人合著，夜读公众号出品"
+      },
+      {
+        "title": "你暖起来就像好天气",
+        "publisher": "江苏凤凰文艺出版社",
+        "isbn": "9787559409898",
+        "date": "2017年10月",
+        "link": "https://book.douban.com/subject/30336323/",
+        "img": "static/15c6004d5.png",
+        "extra": "与关熙潮等人合著，美读公众号出品"
+      }
+    ]
+  },
+  "web_project_list": [
+    {
+      "title": "Terebi 在线视频",
+      "img": "static/terebi.png",
+      "link": "https://tv.iamcheyan.com/",
+      "extra": "<p>可在线收看全日本100多个电视台的公开节目。</p><p>视频网站 / 发布时间：2024年</p>"
+    },
+    {
+      "title": "Kotoba 日语学习",
+      "img": "static/kotoba.png",
+      "link": "https://kotoba.iamcheyan.com/",
+      "extra": "<p>在线日语背单词工具，支持切换词典和切换各种辅助显示等设置。</p><p>学习工具 / 发布时间：2024年</p>"
+    },
+    {
+      "title": "7z-for-Linux",
+      "img": "static/7z-for-Linux.png",
+      "link": "https://github.com/iamcheyan/7z-for-Linux",
+      "extra": "<p>移植7z压缩软件到Linux系统，同时可以使用原生7z的命令行工具。</p><p>软件移植 / 发布时间：2024年</p>"
+    },
+    {
+      "title": "OrchideaDock",
+      "img": "static/OrchideaDock.png",
+      "link": "https://cinnamon-spices.linuxmint.com/themes/view/OrchideaDock",
+      "extra": "<p>从Orchidea主题衍生出的Cinnamon主题，已被合并到Cinnamon官方仓库。</p><p>系统主题 / 发布时间：2023年</p>"
+    },
+    {
+      "title": "YRBOOK BAS",
+      "img": "static/yrbook.png",
+      "link": "#",
+      "extra": "<p>专为图书行业开发的数据查询工具，支持图书销售数据查询、分析、导入导出等。</p><p>数据分析工具 / 发布时间：2021年</p>"
+    },
+    {
+      "title": "传奇EI2.0 复刻版",
+      "img": "static/mir2ei.png",
+      "link": "app/mir/",
+      "extra": "<p>经典网游复刻游戏，忠实还原了原始玩法与画面，支持单人体验与局域网联机。</p><p>游戏 / 发布时间：2021年</p>"
+    },
+    {
+      "title": "文悦字库",
+      "img": "static/wenyue.png",
+      "link": "https://wenyue.cn/",
+      "extra": "<p>文悦科技（北京）有限公司，成立于2014年，是一家专注于字体设计、开发和销售的公司，获阿里巴巴投资。</p>"
+    },
+    {
+      "title": "GANLINE 橄榄传媒",
+      "img": "static/ganline.png",
+      "link": "app/ganline/",
+      "extra": "<p>专注于网站设计与开发的专业公司，为企业打造兼具美感与功能性的线上平台。</p><p>创业项目 / 发布时间：2012年</p>"
+    },
+    {
+      "title": "VEIKIN 未境电子杂志",
+      "img": "static/veikin.png",
+      "link": "app/veikin/",
+      "extra": "<p>一本创刊于2007年8月29日，以提供原创内容为主的电子杂志，后发行实体书。</p><p>电子杂志 / 发布时间：2007年</p>"
+    }
+  ],
+  "projects": {
+    "list": [
+      {
+        "year": "2022年",
+        "title": "电视剧《刘老根5》",
+        "link": "https://movie.douban.com/subject/35196859/",
+        "info": "主演：赵本山 / 宋小宝 / 程野 / 闫学晶 ",
+        "role": "编剧助理"
+      },
+      {
+        "year": "2021年",
+        "title": "短剧《谎言》",
+        "link": "https://www.ixigua.com/6925687613923787275?id=6925308941765181964&logTag=AObizGgm1RQ2Cczbn8tGg",
+        "info": "今日头条品牌宣传片",
+        "role": "故事策划"
+      },
+      {
+        "year": "2021年",
+        "title": "短剧《更大的世界》",
+        "link": "https://www.ixigua.com/6926795951294448141",
+        "info": "今日头条品牌宣传片",
+        "role": "故事策划"
+      },
+      {
+        "year": "2021年",
+        "title": "短剧《会飞的兔子》",
+        "link": "https://www.xinpianchang.com/a11148266",
+        "info": "今日头条品牌宣传片",
+        "role": "故事策划"
+      },
+      {
+        "year": "2021年",
+        "title": "短剧《我的人生被剧透了》",
+        "link": "https://v.kuaishou.com/9VPdnT",
+        "info": "主演：王老四 / 钟美美",
+        "role": "执行制片人"
+      },
+      {
+        "year": "2020年",
+        "title": "电影《明日重生》",
+        "link": "http://www.iqiyi.com/v_19ry1e39ag.html",
+        "info": "主演：周云鹏 / 程野 / 蔡维利",
+        "role": "制片助理"
+      },
+      {
+        "year": "2020年",
+        "title": "电视剧《刘老根3》",
+        "link": "https://movie.douban.com/subject/33437298/",
+        "info": "主演：赵本山 / 范伟 / 闫学晶",
+        "role": "故事策划"
+      },
+      {
+        "year": "2019年",
+        "title": "电影《兴风作浪》",
+        "link": "https://movie.douban.com/subject/30407554/",
+        "info": "主演：宋晓峰 / 关婷娜 / 蒋依杉 / 文松",
+        "role": "故事策划"
+      },
+      {
+        "year": "2019年",
+        "title": "图书《爱与热爱，让我们勇往直前》",
+        "link": "https://book.douban.com/subject/30489275/",
+        "info": "《乡村爱情故事》主演 “谢大脚” 于月仙传记",
+        "role": "策划编辑"
+      },
+      {
+        "year": "2021年",
+        "title": "短剧《电竞天才的沦陷倒计时》",
+        "link": "https://luv4ever520.lofter.com/",
+        "info": "主演：周峻宇 / 王奕欢",
+        "role": "影视策划"
+      },
+      {
+        "year": "2021年",
+        "title": "电影《兴风作浪2》",
+        "link": "https://movie.douban.com/subject/35402120/",
+        "info": "主演：杨树林 / 田娃 / 王小虎 / 关婷娜",
+        "role": "编剧"
+      },
+      {
+        "year": "2021年",
+        "title": "电视剧《刘老根4》",
+        "link": "https://movie.douban.com/subject/35196859/",
+        "info": "主演：赵本山 / 宋小宝 / 范伟 / 闫学晶",
+        "role": "故事策划"
+      },
+      {
+        "year": "2021年",
+        "title": "电影《兴风作浪3》",
+        "link": "https://movie.douban.com/subject/35343300/",
+        "info": "主演：杨树林 / 关婷娜 / 王小虎 / 蔡维利",
+        "role": "故事策划"
+      },
+      {
+        "year": "2017年",
+        "title": "电影《镜像人·明日青春》",
+        "link": "https://movie.douban.com/subject/27058916/",
+        "info": "主演：李程彬 / 郭姝彤 / 颜卓灵 / 周游 / 王柏杰 / 段博文 ",
+        "role": "图书全记录策划编辑"
+      }
+    ],
+    "imgs": [
+      {
+        "img": "static/ef18d9861.png",
+        "link": "https://movie.douban.com/subject/35196859/",
+        "alt": "电视剧《刘老根5》",
+        "title": "跳转到：电视剧《刘老根5》"
+      },
+      {
+        "img": "static/d9890c63b.jpg",
+        "link": "https://www.ixigua.com/6925687613923787275?id=6925308941765181964&logTag=AObizGgm1RQ2Cczbn8tGg",
+        "alt": "短剧《谎言》",
+        "title": "跳转到：短剧《谎言》"
+      },
+      {
+        "img": "static/52b519edd.jpg",
+        "link": "https://www.ixigua.com/6926795951294448141",
+        "alt": "短剧《更大的世界》",
+        "title": "跳转到：短剧《更大的世界》"
+      },
+      {
+        "img": "static/233171320.jpg",
+        "link": "https://www.xinpianchang.com/a11148266",
+        "alt": "短剧《会飞的兔子》",
+        "title": "跳转到：短剧《会飞的兔子》"
+      },
+      {
+        "img": "static/5edcda15d.jpg",
+        "link": "https://v.kuaishou.com/9VPdnT",
+        "alt": "短剧《我的人生被剧透了》",
+        "title": "跳转到：短剧《我的人生被剧透了》"
+      },
+      {
+        "img": "static/7378aafdd.jpg",
+        "link": "http://www.iqiyi.com/v_19ry1e39ag.html",
+        "alt": "电影《明日重生》",
+        "title": "跳转到：电影《明日重生》"
+      },
+      {
+        "img": "static/b883f89f8.jpg",
+        "link": "https://movie.douban.com/subject/33437298/",
+        "alt": "电视剧《刘老根3》",
+        "title": "跳转到：电视剧《刘老根3》"
+      },
+      {
+        "img": "static/d3f416015.jpg",
+        "link": "https://movie.douban.com/subject/30407554/",
+        "alt": "电影《兴风作浪》",
+        "title": "跳转到：电影《兴风作浪》"
+      },
+      {
+        "img": "static/f2931e618.jpg",
+        "link": "https://book.douban.com/subject/30489275/",
+        "alt": "图书《爱与热爱，让我们勇往直前》",
+        "title": "跳转到：图书《爱与热爱，让我们勇往直前》"
+      },
+      {
+        "img": "static/d61bdae9c.jpg",
+        "link": "https://luv4ever520.lofter.com/",
+        "alt": "短剧《电竞天才的沦陷倒计时》",
+        "title": "跳转到：短剧《电竞天才的沦陷倒计时》"
+      },
+      {
+        "img": "static/9edaa83ae.jpg",
+        "link": "https://movie.douban.com/subject/35402120/",
+        "alt": "电影《兴风作浪2》",
+        "title": "跳转到：电影《兴风作浪2》"
+      },
+      {
+        "img": "static/15d4cbbff.jpg",
+        "link": "https://movie.douban.com/subject/35196859/",
+        "alt": "电视剧《刘老根4》",
+        "title": "跳转到：电视剧《刘老根4》"
+      },
+      {
+        "img": "static/dd4f8b2e8.jpg",
+        "link": "https://movie.douban.com/subject/35343300/",
+        "alt": "电影《兴风作浪3》",
+        "title": "跳转到：电影《兴风作浪3》"
+      },
+      {
+        "img": "static/c695f2694.jpg",
+        "link": "https://movie.douban.com/subject/27058916/",
+        "alt": "电影《镜像人·明日青春》",
+        "title": "跳转到：电影《镜像人·明日青春》"
+      }
+    ]
+  },
+  "events": {
+    "years": [
+      {
+        "year": "2021年",
+        "items": [
+          {
+            "text": "散文集《在别人的地图上，找不到自己的路》台湾发行",
+            "date": "2021-4-1",
+            "link": "https://www.books.com.tw/products/0010885446"
+          }
+        ]
+      },
+      {
+        "year": "2020年",
+        "items": [
+          {
+            "text": "做客中央人民广播电台文艺之声FM106.6《品味书香》节目",
+            "date": "2020-11-17",
+            "link": "http://cnvod.cnr.cn/audio2020/live/wyzs/202011/pwsx_20201117221330wyzs_h.m4a"
+          },
+          {
+            "text": "《王牌创业者 · 系列小说》第二部《区块链风云》出版",
+            "date": "2020-10-01",
+            "link": "https://book.douban.com/subject/35216411/"
+          }
+        ]
+      },
+      {
+        "year": "2019年",
+        "items": [
+          {
+            "text": "《这世界正在遗忘不改变的人》有声书上线喜马拉雅",
+            "date": "2019-8-01",
+            "link": "https://www.ximalaya.com/youshengshu/25457976/"
+          },
+          {
+            "text": "《别去抱怨生活的苦，那是去看世界的路》有声书上线喜马拉雅",
+            "date": "2019-2-01",
+            "link": "https://www.ximalaya.com/youshengshu/18708996/"
+          },
+          {
+            "text": "《王牌创业者：风口游戏》有声书上线喜马拉雅",
+            "date": "2019-12-01",
+            "link": "https://www.ximalaya.com/youshengshu/31077210/"
+          }
+        ]
+      },
+      {
+        "year": "2018年",
+        "items": [
+          {
+            "text": "《别去抱怨生活的苦，那是去看世界的路》个人作品集出版",
+            "date": "2018-11-01",
+            "link": "https://book.douban.com/subject/30336323/"
+          },
+          {
+            "text": "京东图书大咖进校园(北京体育大学活动)，澈言对话关熙潮",
+            "date": "2018-10-09",
+            "link": "http://news.youth.cn/gn/201810/t20181009_11749618.htm"
+          },
+          {
+            "text": "《世界正在惩罚你这样的人》合著作品集出版",
+            "date": "2018-02-01",
+            "link": "https://book.douban.com/subject/30242395/"
+          },
+          {
+            "text": "《王牌创业者 · 系列小说》第一部《风口游戏》出版",
+            "date": "2018-02-01",
+            "link": "https://book.douban.com/subject/27592545/"
+          },
+          {
+            "text": "《故事会 · 文摘版》2018年1月号，发表小说《寻找名字的人》",
+            "date": "2018-01-01",
+            "link": "http://www.storychina.cn/frmOnlineStory_Detail.aspx?ID=2643"
+          }
+        ]
+      },
+      {
+        "year": "2017年",
+        "items": [
+          {
+            "text": "《你暖起来就像好天气》合著作品集出版",
+            "date": "2017-10-15",
+            "link": "https://book.douban.com/subject/27178708/"
+          },
+          {
+            "text": "《故事会 · 文摘版》 2017年10月号，发表小说《103号漂亮女生》",
+            "date": "2017-10-01",
+            "link": "http://www.storychina.cn/frmOnlineStory_Detail.aspx?ID=2591"
+          },
+          {
+            "text": "郑州阅开心书店，澈言新书签售会",
+            "date": "2017-09-09",
+            "link": "https://weibo.com/1691479133/FkTK2qsPn?from=page_1005051691479133_profile&wvr=6&mod=weibotime"
+          },
+          {
+            "text": "参加樊登读书会《我是讲书人》活动，入围全国100强",
+            "date": "2017-09-01",
+            "link": "https://v.qq.com/x/cover/vd46s8sey9zmf9b/j0544w8knxr.html"
+          },
+          {
+            "text": "吧啦创想课堂直播间，心灵鸡汤的写作技巧和注意方法，第二课",
+            "date": "2018-08-02",
+            "link": "https://m.qlchat.com/topic/240000514344467.htm?client=weibo&code=bf0cb934f522f48d1498a8b6ce8bf534"
+          },
+          {
+            "text": "北京言几又书店，关熙潮对话澈言，聊聊新书，聊聊写作",
+            "date": "2017-07-08",
+            "link": "https://weibo.com/1691479133/FbCpxuD2c?from=page_1005051691479133_profile&wvr=6&mod=weibotime"
+          },
+          {
+            "text": "荔枝微课，心灵鸡汤的写作技巧和注意方法",
+            "date": "2017-06-22",
+            "link": "https://m.weike.fm/lecture/4521361?inviter_id=34375311&st=sharelink"
+          },
+          {
+            "text": "南京河海大学，江宁校区读者分享会",
+            "date": "2017-06-16",
+            "link": "http://lib.hhu.edu.cn/news/show-620.html"
+          },
+          {
+            "text": "参加中央人民广播电台文艺之声，品味书香节目录制《这世界正在遗忘不改变的人》",
+            "date": "2017-06-08",
+            "link": "http://fm.qq.com/show/rd001dW3Am3GgRLa"
+          },
+          {
+            "text": "《这世界正在遗忘不改变的人》个人作品集出版",
+            "date": "2017-05-01",
+            "link": "https://book.douban.com/subject/27031444/"
+          }
+        ]
+      },
+      {
+        "year": "2016年",
+        "items": [
+          {
+            "text": "《北漂之中关村创业》搜狐视频，创业纪录片",
+            "date": "2016-08-18",
+            "link": "http://my.tv.sohu.com/us/297606487/84927140.shtml"
+          },
+          {
+            "text": "《三联生活周刊》专访：造字者的春天",
+            "date": "2016-05-09",
+            "link": "http://mp.weixin.qq.com/s?__biz=MzIwNTI2MDY3MQ==&mid=2652463670&idx=1&sn=b177b703b781e5ff1ccc1634f2bbbe1b"
+          },
+          {
+            "text": "《界面新闻》报道：字体设计——这个沉寂了多年的行业终于看到了希望",
+            "date": "2016-04-05",
+            "link": "http://www.jiemian.com/article/597579.html"
+          }
+        ]
+      },
+      {
+        "year": "2015年",
+        "items": [
+          {
+            "text": "《南方日报》报道：开发周期漫长、知识产权保护压力大，互联网字体应用项目融资难",
+            "date": "2015-05-11",
+            "link": "http://epaper.southcn.com/nfdaily/html/2015-05/11/content_7426555.htm"
+          },
+          {
+            "text": "《新周刊》报道：字体设计不是站在风口的猪",
+            "date": "2015-03-01"
+          },
+          {
+            "text": "《信息时报》报道：在最快的行业做最慢的活儿",
+            "date": "2015-02-27",
+            "link": "http://epaper.xxsb.com/showNews/2015-02-27/216369.html"
+          }
+        ]
+      },
+      {
+        "year": "2014年",
+        "items": [
+          {
+            "text": "《爱范儿》报道：两个人的创业梦想，古籍字体与互联网如何融合？",
+            "date": "2014-12-22",
+            "link": "http://www.ifanr.com/477423"
+          },
+          {
+            "text": "《36氪》报道：互联网上的汉字就该一直这么丑吗？",
+            "date": "2014-12-20",
+            "link": "http://36kr.com/p/217961.html"
+          }
+        ]
+      }
+    ]
+  },
+  "footer": {
+    "links": "",
+    "icp": "© 2010 - <script>document.write(new Date().getFullYear())</script>&nbsp;<a href=\"http://iamcheyan.com/\">Cheyan</a> All Rights Reserved&nbsp;<a href=\"https://beian.miit.gov.cn/\" target=\"_blank\">京ICP备19045254号-1</a>"
+  }
+}

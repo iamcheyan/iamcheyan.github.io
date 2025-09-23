@@ -1,0 +1,291 @@
+body {
+	background-color: #000000;
+	font-size: 14px;
+	color: #999;
+	margin: 0;
+	padding: 0;
+	overflow-y: scroll;
+	line-height: 1.8;
+	/* height: 100%; */
+	font-family: "Microsoft YaHei", "Microsoft JhengHei", "SF UI Display", ".PingFang SC", "PingFang SC", "Neue Haas Grotesk Text Pro", "Arial Nova", "Segoe UI", "Helvetica Neue", "Source Han Sans SC", "Noto Sans CJK SC", "Source Han Sans CN", "Noto Sans SC", "Source Han Sans TC", "Noto Sans CJK TC", "Hiragino Sans GB", sans-serif;
+	background-image: url(../static/footer.jpg);
+	background-position: bottom center;
+	background-repeat: no-repeat;
+}
+
+div,
+dl,
+dt,
+dd,
+ul,
+li,
+p {
+	margin: 0;
+	padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-size: 12px;
+	margin: 0;
+	padding: 0;
+	font-weight: normal;
+}
+
+img {
+	border: 0;
+}
+
+ul,
+ol {
+	list-style: none;
+}
+
+img {
+	border: 0;
+}
+
+a {
+	color: #333;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: none;
+	color: #ba9c6c;
+}
+
+input,
+textarea,
+select {
+	vertical-align: middle;
+}
+
+*:focus {
+	outline: none;
+}
+
+em,
+i {
+	font-style: normal;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+.clear {
+	clear: both;
+	display: block;
+	height: 0;
+	line-height: 0;
+	font-size: 0;
+}
+
+.clearfix:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+::-webkit-scrollbar {
+	width: .625rem
+}
+
+::-webkit-scrollbar:horizontal {
+	height: .625rem;
+	margin-bottom: .125rem
+}
+
+::-webkit-scrollbar-track {
+	border-radius: .625rem
+}
+
+::-webkit-scrollbar-track-piece {
+	background-color: #000;
+	/* border-radius: .625rem */
+}
+/* 滚动条 */
+::-webkit-scrollbar-thumb {
+	width: .625rem;
+	/* border-radius: .3125rem; */
+	background: #cecece
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: #cecece
+}
+
+.bg {
+	background: url(../static/bg.jpg) no-repeat;
+	/* background-size: 50% auto; */
+	background-position: center top ;
+	/* width: 1383px; */
+	min-height: 500px;
+}
+.page {
+	width: 998px;
+	margin: 0 auto;
+	padding: 40px 0px;
+}
+.box a {
+	color: #fff;
+	text-decoration: underline;
+}
+.box a:before {
+    content: "👉";
+    height: .625rem;
+    width: .8rem;
+    font-size: .6rem;
+    display: inline-block;
+    margin: 0 .2rem;
+    vertical-align: top;
+    opacity: .45;
+	color: #fff;
+}
+.logo {
+	background: url(../static/logo.png)  no-repeat;
+	width: 233px;
+	height: 88px;
+	display: inline-block;
+	text-indent: -999em;
+	overflow: hidden;
+	/* float: left; */
+}
+
+.download{
+	background: url(../static/download.png)  no-repeat;
+	width: 180px;
+	height: 81px;
+	display: inline-block;
+	text-indent: -999em;
+	overflow: hidden;
+	/* float: right; */
+}
+header {
+	display:flex;
+	height: 100px;
+    justify-content: space-between;
+    flex-wrap:wrap;
+	align-items: center;
+}
+header a {
+	/* align-self:center; */
+}
+.banner {
+	margin: 30px 0 0 0;
+}
+nav {
+	margin: 20px 0 0 0;
+}
+nav a {
+	color: #fff;
+}
+nav a::after {
+	content: "/";
+	padding: 0 10px;
+}
+.box {
+	display: flex;
+	width: 998px;
+	margin: 0 auto;
+	border-bottom: 1px solid #575757;
+	padding-bottom: 40px;
+	margin-bottom: 40px;
+	justify-content: space-between;
+    flex-wrap: wrap;
+    /* align-items: center; */
+}
+.callMe {
+	border-bottom: none;
+}
+.leftBox {
+	/* float: left; */
+}
+.leftBox img {
+	margin: 20px 20px 0 0;
+	max-width: 500px;
+	border:1px  solid #696969;
+}
+.leftBox h3 {
+	color: #ba9c6c;
+	font-weight: bold;
+	font-size: 16px;
+	margin-bottom: 5px;
+}
+.rightBox {
+	/* flex: 1; */
+}
+.infor .leftBox{
+	width: 500px;
+}
+.infor .rightBox {
+	text-align: right;
+	margin-top: 25px;
+}
+.infor .rightBox img {
+	margin-left: 20px;
+	border: 1px solid #696969;
+}
+footer {
+	text-align: center;
+	padding: 50px 0;
+	color: #fff;
+}
+footer a {
+	color: #fff;
+}
+.details .rightBox {
+	padding-top: 6px;
+	
+}
+.details .leftBox{
+	width: 800px;
+}
+.details b {
+	font-weight: bolder;
+	color:red;
+}
+.update {
+	background-image: none;
+	/* width: 387px; */
+	height: 130px;
+	overflow: hidden;
+	font-size: 12px;
+	/* padding: 10px; */
+	color: #fff;
+	text-align: center;
+}
+.update .box {
+	width: 386px;
+}
+.update h3 {
+	font-size: 13px;
+}
+.update a {
+	text-decoration: underline;
+	color: yellow;
+}
+.update .box {
+	border-bottom: none;
+}
+.update .box  span {
+	color: yellow;
+	font-weight: bold;
+}
+.update ol {
+	margin: 0;
+	padding: 0;
+}
+.update li {
+	margin: 0;
+	padding:0;
+}
+.update .box .leftBox {
+	padding: 10px 15px;
+}

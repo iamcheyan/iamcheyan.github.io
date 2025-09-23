@@ -1,0 +1,377 @@
+{
+  "site_title": "🧐  IAM CHEYAN",
+  "about": {
+    "title": "徹言 cheyan",
+    "subtitle": "プログラマー、作家、インターネット業界従事者",
+    "desc": "美読契約作家、豆瓣読書作家、簡書推薦作家、複数の書籍を出版",
+    "me_title": "私について<b>About Me</b>",
+    "me_content": "<h4>徹言｜プログラマー・作家・脚本家</h4> <section id=\"profile\"><p>\n 2009年からフルスタック開発に従事し、Python（Flask・PyWebIO・Streamlit）、JavaScript（ES6+）、MySQLなどの技術スタックを活用してまいりました。2014年に起業し、投資を獲得した経験があります。チームマネジメントやプロジェクト実行の豊富な経験を持ち、書籍出版や映像作品の脚本・制作にも携わるなど、多分野での協働経験を積んでまいりました。<br> 現在は日本でWeb開発職を希望しております。\n  </p>\n</section>\n\n<section id=\"skills\">\n </section>"
+
+  },
+  "titles": {
+    "about_title": "徹言 cheyan",
+    "contact_title": "連絡先<b>Contact me</b>",
+    "projects_books_title": "プロジェクト<b>My projects</b>",
+    "books_title": "出版物<b>My achievements</b>",
+    "projects_title": "その他の参加プロジェクト<b>Other projects</b>",
+    "events_title": "私についての報道<b>About me in the media</b>"
+  },
+  "contact": {
+    "twitter_label": "",
+    "twitter": "x.com/iamcheyan",
+    "twitter_link": "https://x.com/iamcheyan",
+    "email_label": "",
+    "email": "me@iamcheyan.com",
+    "email_link": "mailto:me@iamcheyan.com"
+  },
+  "resume_download_text": "履歴書をダウンロード（PDF）",
+  "books": {
+    "list": [
+      {
+        "title": "他人の地図では自分の道は見つからない",
+        "publisher": "台湾ムーグァン文化有限公司",
+        "isbn": "9789869942508",
+        "date": "2020年4月",
+        "link": "https://www.books.com.tw/products/0010885446",
+        "img": "static/1e9272132.png",
+        "extra": "<a href=\"https://www.books.com.tw/products/E050089929\" target=\"_blank\">デジタル版も提供</a>"
+      },
+      {
+        "title": "ブロックチェーン風雲",
+        "publisher": "遼寧人民出版社",
+        "isbn": "9787205099527",
+        "date": "2020年10月",
+        "link": "https://book.douban.com/subject/35216411/",
+        "img": "static/1881ddbd3.png",
+        "extra": "関連映像権交渉中"
+      },
+      {
+        "title": "人生の苦しみを嘆くな、それは世界を見る道だ",
+        "publisher": "江蘇鳳凰文芸出版社",
+        "isbn": "9787559429100",
+        "date": "2018年11月",
+        "link": "https://book.douban.com/subject/30336323/",
+        "img": "static/d9dd49c2e.png",
+        "extra": "<a href=\"https://www.ximalaya.com/youshengshu/18708996/\" target=\"_blank\">オーディオ権はXimalayaに授権済み</a>"
+      },
+      {
+        "title": "エース起業家：風口ゲーム",
+        "publisher": "百花洲文芸出版社",
+        "isbn": "9787550025387",
+        "date": "2018年2月",
+        "link": "https://book.douban.com/subject/27592545/",
+        "img": "static/b1fc0c8b0.png",
+        "extra": "映像権はiQIYIに授権済み<br><a href=\"https://www.ximalaya.com/youshengshu/31077210/\" target=\"_blank\">オーディオ権は北京人民ラジオ局に授権済み</a>"
+      },
+      {
+        "title": "この世界は変わらない人を忘れていく",
+        "publisher": "北京連合出版公司",
+        "isbn": "9787559602404",
+        "date": "2017年5月",
+        "link": "https://book.douban.com/subject/27031444/",
+        "img": "static/49b4e02ab.png",
+        "extra": "<a href=\"https://www.ximalaya.com/youshengshu/25457976/\" target=\"_blank\">オーディオ権はXimalayaに授権済み</a>"
+      },
+      {
+        "title": "世界はあなたのような人を罰している",
+        "publisher": "中国法制出版社",
+        "isbn": "9787509391037",
+        "date": "2018年3月",
+        "link": "https://book.douban.com/subject/30242395/",
+        "img": "static/06988e8c2.png",
+        "extra": "李尚龍らと共著、夜読公式アカウント発行"
+      },
+      {
+        "title": "あなたが温かくなると天気も良くなる",
+        "publisher": "江蘇鳳凰文芸出版社",
+        "isbn": "9787559409898",
+        "date": "2017年10月",
+        "link": "https://book.douban.com/subject/30336323/",
+        "img": "static/15c6004d5.png",
+        "extra": "関熙潮らと共著、美読公式アカウント発行"
+      }
+    ]
+  },
+  "web_project_list": [
+    {
+      "title": "Terebi",
+      "img": "static/terebi.png",
+      "link": "https://tv.iamcheyan.com/",
+      "extra": "<p>日本全国100以上のテレビ局の公開番組をオンラインで視聴可能。</p><p>動画サイト / 公開：2024年</p>"
+    },
+    {
+      "title": "Kotoba",
+      "img": "static/kotoba.png",
+      "link": "https://kotoba.iamcheyan.com/",
+      "extra": "<p>オンライン日本語単語暗記ツール。辞書切替や各種補助表示設定に対応。</p><p>学習ツール / 公開：2024年</p>"
+    },
+    {
+      "title": "7z-for-Linux",
+      "img": "static/7z-for-Linux.png",
+      "link": "https://github.com/iamcheyan/7z-for-Linux",
+      "extra": "<p>7z圧縮ソフトをLinuxに移植、ネイティブ7zコマンドラインツールも利用可能。</p><p>ソフトウェア移植 / 公開：2024年</p>"
+    },
+    {
+      "title": "OrchideaDock",
+      "img": "static/OrchideaDock.png",
+      "link": "https://cinnamon-spices.linuxmint.com/themes/view/OrchideaDock",
+      "extra": "<p>Orchideaテーマから派生したテーマ。Cinnamon公式リポジトリに統合済み。</p><p>システムテーマ / 公開：2023年</p>"
+    },
+    {
+      "title": "YRBOOK BAS",
+      "img": "static/yrbook.png",
+      "link": "#",
+      "extra": "<p>書籍業界向けに開発されたデータ検索ツール。</p><p>データ分析ツール / 公開：2021年</p>"
+    },
+    {
+      "title": "Mir2EI2.0",
+      "img": "static/mir2ei.png",
+      "link": "app/mir/",
+      "extra": "<p>クラシックオンラインゲームの復刻版。オリジナルのプレイ方法を忠実に再現。</p><p>ゲーム / 公開：2021年</p>"
+    },
+    {
+      "title": "wenyue.cn",
+      "img": "static/wenyue.png",
+      "link": "https://wenyue.cn/",
+      "extra": "<p>文悦科技（北京）有限公司、2014年設立。フォント設計・開発・販売に特化し、アリババから投資を受ける。</p>"
+    },
+    {
+      "title": "GANLINE Olive Media",
+      "img": "static/ganline.png",
+      "link": "app/ganline/",
+      "extra": "<p>ウェブサイト設計・開発に特化した会社。</p><p>起業プロジェクト / 公開：2012年</p>"
+    },
+    {
+      "title": "VEIKIN",
+      "img": "static/veikin.png",
+      "link": "app/veikin/",
+      "extra": "<p>2007年8月29日創刊、オリジナルコンテンツを主とする電子雑誌。</p><p>電子雑誌 / 公開：2007年</p>"
+    }
+  ],
+  "projects": {
+    "list": [
+      {"year": "2022年", "title": "ドラマ『劉老根5』", "link": "https://movie.douban.com/subject/35196859/", "info": "主演：趙本山 / 宋小宝 / 程野 / 閻学晶", "role": "脚本助手"},
+      {"year": "2021年", "title": "ショートドラマ『嘘』", "link": "https://www.ixigua.com/6925687613923787275?id=6925308941765181964&logTag=AObizGgm1RQ2Cczbn8tGg", "info": "Toutiaoブランドプロモーション", "role": "ストーリー企画"},
+      {"year": "2021年", "title": "ショートドラマ『より大きな世界』", "link": "https://www.ixigua.com/6926795951294448141", "info": "Toutiaoブランドプロモーション", "role": "ストーリー企画"},
+      {"year": "2021年", "title": "ショートドラマ『飛べるウサギ』", "link": "https://www.xinpianchang.com/a11148266", "info": "Toutiaoブランドプロモーション", "role": "ストーリー企画"},
+      {"year": "2021年", "title": "ショートドラマ『私の人生はネタバレされた』", "link": "https://v.kuaishou.com/9VPdnT", "info": "主演：王老四 / 鐘美美", "role": "エグゼクティブプロデューサー"},
+      {"year": "2020年", "title": "映画『明日再生』", "link": "http://www.iqiyi.com/v_19ry1e39ag.html", "info": "主演：周雲鵬 / 程野 / 蔡維利", "role": "プロデューサー助手"},
+      {"year": "2020年", "title": "ドラマ『劉老根3』", "link": "https://movie.douban.com/subject/33437298/", "info": "主演：趙本山 / 范偉 / 閻学晶", "role": "ストーリー企画"},
+      {"year": "2019年", "title": "映画『波乱万丈』", "link": "https://movie.douban.com/subject/30407554/", "info": "主演：宋暁峰 / 関婷娜 / 蒋依杉 / 文松", "role": "ストーリー企画"},
+      {"year": "2019年", "title": "書籍『愛と情熱、私たちを前進させる』", "link": "https://book.douban.com/subject/30489275/", "info": "『田舎の愛物語』主演 “謝大脚” 于月仙の伝記", "role": "企画編集"},
+      {"year": "2021年", "title": "ショートドラマ『eスポーツ天才の堕落カウントダウン』", "link": "https://luv4ever520.lofter.com/", "info": "主演：周峻宇 / 王奕歓", "role": "映像企画"},
+      {"year": "2021年", "title": "映画『波乱万丈2』", "link": "https://movie.douban.com/subject/35402120/", "info": "主演：楊樹林 / 田娃 / 王小虎 / 関婷娜", "role": "脚本"},
+      {"year": "2021年", "title": "ドラマ『劉老根4』", "link": "https://movie.douban.com/subject/35196859/", "info": "主演：趙本山 / 宋小宝 / 范偉 / 閻学晶", "role": "ストーリー企画"},
+      {"year": "2021年", "title": "映画『波乱万丈3』", "link": "https://movie.douban.com/subject/35343300/", "info": "主演：楊樹林 / 関婷娜 / 王小虎 / 蔡維利", "role": "ストーリー企画"},
+      {"year": "2017年", "title": "映画『ミラーズ・明日青春』", "link": "https://movie.douban.com/subject/27058916/", "info": "主演：李程彬 / 郭姝彤 / 顔卓霊 / 周游 / 王柏傑 / 段博文", "role": "書籍全記録企画編集"}
+    ],
+    "imgs": [
+      {"img": "static/ef18d9861.png", "link": "https://movie.douban.com/subject/35196859/", "alt": "ドラマ『劉老根5』", "title": "リンク先：ドラマ『劉老根5』"},
+      {"img": "static/d9890c63b.jpg", "link": "https://www.ixigua.com/6925687613923787275?id=6925308941765181964&logTag=AObizGgm1RQ2Cczbn8tGg", "alt": "ショートドラマ『嘘』", "title": "リンク先：ショートドラマ『嘘』"},
+      {"img": "static/52b519edd.jpg", "link": "https://www.ixigua.com/6926795951294448141", "alt": "ショートドラマ『より大きな世界』", "title": "リンク先：ショートドラマ『より大きな世界』"},
+      {"img": "static/233171320.jpg", "link": "https://www.xinpianchang.com/a11148266", "alt": "ショートドラマ『飛べるウサギ』", "title": "リンク先：ショートドラマ『飛べるウサギ』"},
+      {"img": "static/5edcda15d.jpg", "link": "https://v.kuaishou.com/9VPdnT", "alt": "ショートドラマ『私の人生はネタバレされた』", "title": "リンク先：ショートドラマ『私の人生はネタバレされた』"},
+      {"img": "static/7378aafdd.jpg", "link": "http://www.iqiyi.com/v_19ry1e39ag.html", "alt": "映画『明日再生』", "title": "リンク先：映画『明日再生』"},
+      {"img": "static/b883f89f8.jpg", "link": "https://movie.douban.com/subject/33437298/", "alt": "ドラマ『劉老根3』", "title": "リンク先：ドラマ『劉老根3』"},
+      {"img": "static/d3f416015.jpg", "link": "https://movie.douban.com/subject/30407554/", "alt": "映画『波乱万丈』", "title": "リンク先：映画『波乱万丈』"},
+      {"img": "static/f2931e618.jpg", "link": "https://book.douban.com/subject/30489275/", "alt": "書籍『愛と情熱、私たちを前進させる』", "title": "リンク先：書籍『愛と情熱、私たちを前進させる』"},
+      {"img": "static/d61bdae9c.jpg", "link": "https://luv4ever520.lofter.com/", "alt": "ショートドラマ『eスポーツ天才の堕落カウントダウン』", "title": "リンク先：ショートドラマ『eスポーツ天才の堕落カウントダウン』"},
+      {"img": "static/9edaa83ae.jpg", "link": "https://movie.douban.com/subject/35402120/", "alt": "映画『波乱万丈2』", "title": "リンク先：映画『波乱万丈2』"},
+      {"img": "static/15d4cbbff.jpg", "link": "https://movie.douban.com/subject/35196859/", "alt": "ドラマ『劉老根4』", "title": "リンク先：ドラマ『劉老根4』"},
+      {"img": "static/dd4f8b2e8.jpg", "link": "https://movie.douban.com/subject/35343300/", "alt": "映画『波乱万丈3』", "title": "リンク先：映画『波乱万丈3』"},
+      {"img": "static/c695f2694.jpg", "link": "https://movie.douban.com/subject/27058916/", "alt": "映画『ミラーズ・明日青春』", "title": "リンク先：映画『ミラーズ・明日青春』"}
+    ]
+  },
+  "events": {
+    "years": [
+      {
+        "year": "2021年",
+        "items": [
+          {
+            "text": "エッセイ集『他人の地図では自分の道は見つからない』台湾で出版",
+            "date": "2021-4-1",
+            "link": "https://www.books.com.tw/products/0010885446"
+          }
+        ]
+      },
+      {
+        "year": "2020年",
+        "items": [
+          {
+            "text": "中央人民ラジオ文芸之声FM106.6『品味書香』番組に出演",
+            "date": "2020-11-17",
+            "link": "http://cnvod.cnr.cn/audio2020/live/wyzs/202011/pwsx_20201117221330wyzs_h.m4a"
+          },
+          {
+            "text": "『エース起業家』シリーズ第2部『ブロックチェーン風雲』出版",
+            "date": "2020-10-01",
+            "link": "https://book.douban.com/subject/35216411/"
+          }
+        ]
+      },
+      {
+        "year": "2019年",
+        "items": [
+          {
+            "text": "『この世界は変わらない人を忘れていく』オーディオブックがXimalayaで配信開始",
+            "date": "2019-8-01",
+            "link": "https://www.ximalaya.com/youshengshu/25457976/"
+          },
+          {
+            "text": "『人生の苦しみを嘆くな、それは世界を見る道だ』オーディオブックがXimalayaで配信開始",
+            "date": "2019-2-01",
+            "link": "https://www.ximalaya.com/youshengshu/18708996/"
+          },
+          {
+            "text": "『エース起業家：風口ゲーム』オーディオブックがXimalayaで配信開始",
+            "date": "2019-12-01",
+            "link": "https://www.ximalaya.com/youshengshu/31077210/"
+          }
+        ]
+      },
+      {
+        "year": "2018年",
+        "items": [
+          {
+            "text": "『人生の苦しみを嘆くな、それは世界を見る道だ』個人作品集出版",
+            "date": "2018-11-01",
+            "link": "https://book.douban.com/subject/30336323/"
+          },
+          {
+            "text": "京東図書有名人キャンパス訪問（北京体育大学イベント）、徹言と関熙潮の対談",
+            "date": "2018-10-09",
+            "link": "http://news.youth.cn/gn/201810/t20181009_11749618.htm"
+          },
+          {
+            "text": "『世界はあなたのような人を罰している』共著作品集出版",
+            "date": "2018-02-01",
+            "link": "https://book.douban.com/subject/30242395/"
+          },
+          {
+            "text": "『エース起業家』シリーズ第1部『風口ゲーム』出版",
+            "date": "2018-02-01",
+            "link": "https://book.douban.com/subject/27592545/"
+          },
+          {
+            "text": "『ストーリー会・文摘版』2018年1月号、小説『名前を探す人』掲載",
+            "date": "2018-01-01",
+            "link": "http://www.storychina.cn/frmOnlineStory_Detail.aspx?ID=2643"
+          }
+        ]
+      },
+      {
+        "year": "2017年",
+        "items": [
+          {
+            "text": "『あなたが温かくなると天気も良くなる』共著作品集出版",
+            "date": "2017-10-15",
+            "link": "https://book.douban.com/subject/27178708/"
+          },
+          {
+            "text": "『ストーリー会・文摘版』2017年10月号、小説『103号の美少女』掲載",
+            "date": "2017-10-01",
+            "link": "http://www.storychina.cn/frmOnlineStory_Detail.aspx?ID=2591"
+          },
+          {
+            "text": "鄭州悦開心書店、徹言新刊サイン会",
+            "date": "2017-09-09",
+            "link": "https://weibo.com/1691479133/FkTK2qsPn?from=page_1005051691479133_profile&wvr=6&mod=weibotime"
+          },
+          {
+            "text": "樊登読書会『私は本を語る人』イベント参加、全国100強入り",
+            "date": "2017-09-01",
+            "link": "https://v.qq.com/x/cover/vd46s8sey9zmf9b/j0544w8knxr.html"
+          },
+          {
+            "text": "バラ創想教室ライブ、心の栄養スープの執筆テクニックと注意点、第2回",
+            "date": "2018-08-02",
+            "link": "https://m.qlchat.com/topic/240000514344467.htm?client=weibo&code=bf0cb934f522f48d1498a8b6ce8bf534"
+          },
+          {
+            "text": "北京言几又書店、関熙潮と徹言の対談、新刊や執筆について語る",
+            "date": "2017-07-08",
+            "link": "https://weibo.com/1691479133/FbCpxuD2c?from=page_1005051691479133_profile&wvr=6&mod=weibotime"
+          },
+          {
+            "text": "リジ微課、心の栄養スープの執筆テクニックと注意点",
+            "date": "2017-06-22",
+            "link": "https://m.weike.fm/lecture/4521361?inviter_id=34375311&st=sharelink"
+          },
+          {
+            "text": "南京河海大学、江寧キャンパス読者交流会",
+            "date": "2017-06-16",
+            "link": "http://lib.hhu.edu.cn/news/show-620.html"
+          },
+          {
+            "text": "中央人民ラジオ文芸之声『品味書香』番組で『この世界は変わらない人を忘れていく』を収録",
+            "date": "2017-06-08",
+            "link": "http://fm.qq.com/show/rd001dW3Am3GgRLa"
+          },
+          {
+            "text": "『この世界は変わらない人を忘れていく』個人作品集出版",
+            "date": "2017-05-01",
+            "link": "https://book.douban.com/subject/27031444/"
+          }
+        ]
+      },
+      {
+        "year": "2016年",
+        "items": [
+          {
+            "text": "『北漂の中関村起業』搜狐動画、起業ドキュメンタリー",
+            "date": "2016-08-18",
+            "link": "http://my.tv.sohu.com/us/297606487/84927140.shtml"
+          },
+          {
+            "text": "『三聯生活週刊』特集：文字デザイナーの春",
+            "date": "2016-05-09",
+            "link": "http://mp.weixin.qq.com/s?__biz=MzIwNTI2MDY3MQ==&mid=2652463670&idx=1&sn=b177b703b781e5ff1ccc1634f2bbbe1b"
+          },
+          {
+            "text": "『界面ニュース』報道：フォントデザイン——長年沈黙していた業界がついに希望を見た",
+            "date": "2016-04-05",
+            "link": "http://www.jiemian.com/article/597579.html"
+          }
+        ]
+      },
+      {
+        "year": "2015年",
+        "items": [
+          {
+            "text": "『南方日報』報道：開発期間が長く、知的財産権保護のプレッシャーが大きい、インターネットフォントプロジェクトの資金調達は困難",
+            "date": "2015-05-11",
+            "link": "http://epaper.southcn.com/nfdaily/html/2015-05/11/content_7426555.htm"
+          },
+          {
+            "text": "『新週刊』報道：フォントデザインは流行の豚ではない",
+            "date": "2015-03-01"
+          },
+          {
+            "text": "『信息時報』報道：最速の業界で最もゆっくりした仕事をする",
+            "date": "2015-02-27",
+            "link": "http://epaper.xxsb.com/showNews/2015-02-27/216369.html"
+          }
+        ]
+      },
+      {
+        "year": "2014年",
+        "items": [
+          {
+            "text": "『愛范児』報道：二人の起業の夢、古典フォントとインターネットはどう融合するか？",
+            "date": "2014-12-22",
+            "link": "http://www.ifanr.com/477423"
+          },
+          {
+            "text": "『36Kr』報道：インターネット上の漢字はずっとこんなに醜いままでいいのか？",
+            "date": "2014-12-20",
+            "link": "http://36kr.com/p/217961.html"
+          }
+        ]
+      }
+    ]
+  },
+  "footer": {
+    "links": "",
+    "icp": "© 2010 - <script>document.write(new Date().getFullYear())</script>&nbsp;<a href=\"http://iamcheyan.com/\">Cheyan</a> All Rights Reserved&nbsp;<a href=\"https://beian.miit.gov.cn/\" target=\"_blank\">京ICP备19045254号-1</a>"
+  }
+}
