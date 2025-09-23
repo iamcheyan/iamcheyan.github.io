@@ -59,7 +59,7 @@ def has_staged_or_worktree_changes(repo_dir: Path) -> bool:
 
 def commit_all(repo_dir: Path) -> None:
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    message = f"chore: auto-commit at {now}"
+    message = f"Update: {now}"
     run(["git", "add", "-A"], cwd=repo_dir)
 
     if has_any_commit(repo_dir):
@@ -102,7 +102,7 @@ def main() -> int:
     parser.add_argument(
         "--no-force",
         action="store_true",
-        help="不使用 --force，默认强制推送",
+        help="不使用 --force（默认强制推送到 main 分支）",
     )
 
     args = parser.parse_args()
@@ -110,8 +110,8 @@ def main() -> int:
     branch: str = args.branch
     use_force: bool = not args.no_force
 
-    # 将工作目录切换到脚本所在目录（仓库根目录）
-    repo_dir = Path(__file__).resolve().parent
+    # 将工作目录切换到脚本所在目录的父目录（仓库根目录）
+    repo_dir = Path(__file__).resolve().parent.parent
     os.chdir(repo_dir)
 
     try:

@@ -5,24 +5,26 @@ from __future__ import annotations
 
 import json
 import re
+import subprocess
+import sys
 from html import escape
 from pathlib import Path
 from textwrap import indent
 
 BASE_DIR = Path(__file__).parent
-STATIC_DIR = BASE_DIR / "static"
+DATA_DIR = BASE_DIR / "data"
 TEMPLATE_FILE = BASE_DIR / "index.template.html"
 
 LANGUAGES = [
     {
         "code": "ja",
-        "json": STATIC_DIR / "content_jp.json",
+        "json": DATA_DIR / "content_jp.json",
         "output": BASE_DIR / "index.html",
         "language_attr": "ja",
     },
     {
         "code": "zh-cn",
-        "json": STATIC_DIR / "content_zh.json",
+        "json": DATA_DIR / "content_zh.json",
         "output": BASE_DIR / "index.zh-cn.html",
         "language_attr": "zh-CN",
     },
@@ -289,5 +291,28 @@ def build_pages() -> None:
         print(f"Generated {lang['output'].relative_to(BASE_DIR)}")
 
 
+def auto_push() -> None:
+    """自动执行推送脚本"""
+    push_script = BASE_DIR / "scripts" / "push.py"
+    if push_script.exists():
+        print("🚀 自动推送到GitHub...")
+        try:
+            result = subprocess.run([sys.executable, str(push_script)], 
+                                  cwd=BASE_DIR, 
+                                  capture_output=True, 
+                                  text=True)
+            if result.returncode == 0:
+                print("✅ 推送成功!")
+                print(result.stdout)
+            else:
+                print("❌ 推送失败:")
+                print(result.stderr)
+        except Exception as e:
+            print(f"❌ 执行推送脚本时出错: {e}")
+    else:
+        print("⚠️  推送脚本未找到，跳过自动推送")
+
+
 if __name__ == "__main__":
     build_pages()
+    auto_push()
