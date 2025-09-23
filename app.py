@@ -134,6 +134,9 @@ def replace_template_placeholders(template: str, data: dict, lang_config: dict) 
         template = re.sub(r'(id="contact-email"[^>]*href=")[^"]*(")', rf'\1{html_attr(email_link)}\2', template)
     if github_project_url != "#":
         template = re.sub(r'href="#" id="github-project-link"', f'href="{html_attr(github_project_url)}" id="github-project-link"', template)
+        # 同时更新链接文本
+        github_link_text = data.get("github_project_link", "GitHub Repository")
+        template = re.sub(r'(<a[^>]*id="github-project-link"[^>]*>)[^<]*(</a>)', rf'\1{html_text(github_link_text)}\2', template)
     
     # 生成并替换项目列表
     web_projects_html = render_web_projects(data.get("web_project_list", []))
