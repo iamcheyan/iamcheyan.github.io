@@ -71,8 +71,7 @@ def replace_template_placeholders(template: str, data: dict, lang_config: dict) 
     template = re.sub(r'href="/index\.html"[^>]*', f'href="/index.html"{ja_class}', template)
     template = re.sub(r'href="/index\.zh-cn\.html"[^>]*', f'href="/index.zh-cn.html"{zh_class}', template)
     
-    # 移除动态加载的JavaScript代码（从第一个script标签开始到页面加载时初始化结束）
-    template = re.sub(r'<script>\s*// Cookie操作函数.*?// 页面加载时初始化.*?</script>', '', template, flags=re.DOTALL)
+    # JavaScript代码已在模板中移除，无需额外处理
     
     # 替换各个ID的内容
     replacements = {
