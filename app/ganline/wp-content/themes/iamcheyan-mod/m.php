@@ -1,1 +1,0 @@
-<?php $m = stripos($_SERVER['HTTP_USER_AGENT'],'iPhone') || stripos($_SERVER['HTTP_USER_AGENT'],'iPad') ? true : false; ?>

@@ -139,7 +139,7 @@
     {
       "title": "GANLINE 橄榄传媒",
       "img": "static/ganline.png",
-      "link": "app/ganline/",
+      "link": "app/ganline/index.html",
       "extra": "<p>专注于网站设计与开发的专业公司，为企业打造兼具美感与功能性的线上平台。</p><p>创业项目 / 发布时间：2012年</p>"
     },
     {

@@ -34,8 +34,8 @@
 <div id="page" class="blog-page">
 	<!-- ヘッダー -->
 	<div id="topbar">
-		<a href="?lang=ja" class="on">日本語</a>
-		<a href="?lang=zh-cn">中文</a>
+		<a href="/index.html" class="on">日本語</a>
+		<a href="/index.zh-cn.html">中文</a>
 	</div>
 	<nav class="navbar" role="navigation">
 		<h1><a href="http://iamcheyan.com/">Iam cheyan .com</a></h1>
@@ -181,43 +181,13 @@
 	</div>
 </footer>
 <script>
-	// Cookie操作函数
-	function setCookie(name, value, days) {
-		const expires = new Date();
-		expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
-		document.cookie = name + "=" + value + ";expires=" + expires.toUTCString() + ";path=/";
-	}
-
-	function getCookie(name) {
-		const nameEQ = name + "=";
-		const ca = document.cookie.split(';');
-		for(let i = 0; i < ca.length; i++) {
-			let c = ca[i];
-			while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-			if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-		}
-		return null;
-	}
-
-	// 获取当前语言参数，优先从cookie获取，其次从URL参数获取，默认为日语
+	// 根据当前页面URL确定语言
 	function getCurrentLang() {
-		// 首先尝试从cookie获取
-		const cookieLang = getCookie('user_language');
-		if (cookieLang) {
-			return cookieLang;
+		const path = window.location.pathname;
+		if (path.includes('zh-cn')) {
+			return 'zh-cn';
 		}
-		
-		// 其次从URL参数获取
-		const urlParams = new URLSearchParams(window.location.search);
-		const urlLang = urlParams.get('lang');
-		if (urlLang) {
-			// 将URL参数保存到cookie
-			setCookie('user_language', urlLang, 365);
-			return urlLang;
-		}
-		
-		// 默认返回日语
-		return 'ja';
+		return 'ja'; // 默认为日语
 	}
 
 	// 根据语言获取对应的内容文件
@@ -234,8 +204,8 @@
 	// 更新语言切换按钮状态
 	function updateLanguageButtons() {
 		const currentLang = getCurrentLang();
-		const jaBtn = document.querySelector('a[href="?lang=ja"]');
-		const zhBtn = document.querySelector('a[href="?lang=zh-cn"]');
+		const jaBtn = document.querySelector('a[href="/index.html"]');
+		const zhBtn = document.querySelector('a[href="/index.zh-cn.html"]');
 		
 		if (currentLang === 'ja') {
 			jaBtn.classList.add('on');
@@ -334,38 +304,11 @@
 
 	// 页面加载时初始化
 	document.addEventListener('DOMContentLoaded', function() {
-		// 检查是否需要根据cookie更新URL
-		const cookieLang = getCookie('user_language');
-		const urlParams = new URLSearchParams(window.location.search);
-		const urlLang = urlParams.get('lang');
-		
-		// 如果cookie中有语言设置但URL中没有，则更新URL
-		if (cookieLang && !urlLang) {
-			const currentUrl = new URL(window.location);
-			currentUrl.searchParams.set('lang', cookieLang);
-			window.history.replaceState({}, '', currentUrl);
-		}
-		
 		updateLanguageButtons();
 		loadContent();
 	});
 
-	// 监听语言切换按钮点击事件
-	document.addEventListener('click', function(e) {
-		if (e.target.matches('a[href^="?lang="]')) {
-			e.preventDefault();
-			const lang = e.target.getAttribute('href').replace('?lang=', '');
-			
-			// 保存语言选择到cookie
-			setCookie('user_language', lang, 365);
-			
-			const currentUrl = new URL(window.location);
-			currentUrl.searchParams.set('lang', lang);
-			window.history.pushState({}, '', currentUrl);
-			updateLanguageButtons();
-			loadContent();
-		}
-	});
+	// 语言切换现在通过直接跳转页面实现，无需JavaScript处理
 </script>
 <!-- 移除不可用的外部脚本：darkmode 与 commentTyping 已删除以避免 404 与未定义错误 -->
 </body>

@@ -140,7 +140,7 @@
     {
       "title": "GANLINE Olive Media",
       "img": "static/ganline.png",
-      "link": "app/ganline/",
+      "link": "app/ganline/index.html",
       "extra": "<p>ウェブサイト設計・開発に特化した会社。</p><p>起業プロジェクト / 公開：2012年</p>"
     },
     {
