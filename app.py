@@ -380,22 +380,24 @@ def main() -> None:
     parser = argparse.ArgumentParser(
         description="生成静态HTML页面，可选择是否推送到GitHub"
     )
+    # 位置参数：端口（可选）
     parser.add_argument(
-        "push",
+        "port",
         nargs="?",
-        const="push",
-        help="添加此参数将自动推送到GitHub（例如: python3 app.py push）"
-    )
-    parser.add_argument(
-        "--port",
         type=int,
         default=5001,
-        help="后台管理端口，默认 5001"
+        help="后台管理端口（可选），默认 5001。例如: python3 app.py 5004"
+    )
+    # 开关参数：是否推送
+    parser.add_argument(
+        "--push",
+        action="store_true",
+        help="添加此开关将自动推送到GitHub（例如: python3 app.py --push 或 python3 app.py 5004 --push）"
     )
     
     args = parser.parse_args()
-    should_push = args.push is not None
-    admin_port: int = args.port
+    should_push: bool = bool(args.push)
+    admin_port: int = int(args.port)
     
     # 构建页面
     build_pages()
@@ -426,41 +428,77 @@ def start_admin_server(port: int = 5001) -> None:
     def pretty_json(value: Any) -> str:
         return json.dumps(value, ensure_ascii=False, indent=2)
 
+    @app.route("/")
+    def admin_root() -> Any:  # type: ignore[override]
+        return redirect(url_for("admin_index"))
+
     @app.route("/admin")
     def admin_index() -> str:
-        # 展示语言列表
-        langs = [{"code": cfg["code"], "name": cfg["code"]} for cfg in LANGUAGES]
+        # 直接跳转到“同时编辑整份 JSON”
+        return redirect(url_for('admin_edit_full_bi'))
+
+    # 可选：仪表盘（如需使用可访问 /admin/dashboard）
+    @app.route("/admin/dashboard")
+    def admin_dashboard() -> str:
+        # 仪表盘：列出所有分类，并提供“同时编辑中日文”的入口
+        try:
+            _, zh = load_lang_content("zh-cn")
+            _, ja = load_lang_content("ja")
+        except Exception as e:
+            return f"加载数据失败: {e}", 500
+
+        # 以并集作为分类集合
+        keys = sorted(set(list(zh.keys()) + list(ja.keys())))
         tpl = """
 <!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
-  <title>后台管理</title>
+  <title>内容后台 · 仪表盘</title>
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; margin: 24px; }
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; margin: 24px; background: var(--bg); color: var(--fg); }
+    body.light { --bg: #ffffff; --fg: #0f172a; --card: #ffffff; --border: #e5e7eb; --muted:#6b7280; }
+    body.dark  { --bg: #0b1220; --fg: #e5e7eb; --card: #0f172a; --border: #233240; --muted:#94a3b8; }
     a { text-decoration: none; color: #0b5ed7; }
-    .card { border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; margin: 12px 0; }
-    .muted { color: #6b7280; }
+    .card { border: 1px solid var(--border); background: var(--card); border-radius: 8px; padding: 16px; margin: 12px 0; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); grid-gap: 12px; }
+    .muted { color: var(--muted); }
     .btn { display: inline-block; background: #0b5ed7; color: #fff; padding: 8px 12px; border-radius: 6px; }
+    .row { margin: 8px 0; }
+    .toolbar { display:flex; gap:8px; align-items:center; margin:8px 0 16px; }
+    .toggle { background:#334155; color:#fff; border:0; padding:8px 12px; border-radius:6px; cursor:pointer; }
   </style>
+  <script>
+    (function(){
+      const mode = localStorage.getItem('adminTheme') || 'light';
+      document.addEventListener('DOMContentLoaded', function(){ document.body.classList.add(mode); });
+    })();
+  </script>
   </head>
 <body>
-  <h2>后台管理</h2>
-  <p class="muted">按语言选择后可编辑各分类内容；保存会自动重新生成首页。</p>
-  <div>
-  {% for lang in langs %}
-    <div class="card">
-      <div><strong>语言：</strong>{{ lang.code }}</div>
-      <div style="margin-top:8px">
-        <a class="btn" href="{{ url_for('admin_lang', lang_code=lang.code) }}">进入 {{ lang.code }} 后台</a>
+  <h2>内容后台 · 仪表盘</h2>
+  <p class="muted">点击分类进入“同时编辑 JA & ZH-CN”的页面。</p>
+
+  <div class="toolbar">
+    <a class="btn" href="{{ url_for('admin_edit_full_bi') }}">同时编辑整份 JSON（JA & ZH-CN）</a>
+    <button class="toggle" onclick="(function(){const b=document.body;const next=b.classList.contains('dark')?'light':'dark';b.classList.remove('light','dark');b.classList.add(next);localStorage.setItem('adminTheme',next);})();">明/暗切换</button>
+  </div>
+
+  <div class="grid">
+    {% for k in keys %}
+      <div class="card">
+        <div><strong>{{ k }}</strong></div>
+        <div class="row">
+          <a class="btn" href="{{ url_for('admin_edit_section_bi', section=k) }}">同时编辑 JA & ZH-CN</a>
+        </div>
       </div>
-    </div>
-  {% endfor %}
+    {% endfor %}
   </div>
 </body>
 </html>
         """
-        return render_template_string(tpl, langs=langs)
+        return render_template_string(tpl, keys=keys)
 
     @app.route("/admin/<lang_code>")
     def admin_lang(lang_code: str) -> str:
@@ -608,6 +646,256 @@ def start_admin_server(port: int = 5001) -> None:
             path=str(path),
         )
 
+    @app.route("/admin/edit/<section>", methods=["GET", "POST"])
+    def admin_edit_section_bi(section: str) -> str:
+        zh_path, zh_data = load_lang_content("zh-cn")
+        ja_path, ja_data = load_lang_content("ja")
+
+        if request.method == "POST":
+            raw_ja = request.form.get("payload_ja", "")
+            raw_zh = request.form.get("payload_zh", "")
+            try:
+                parsed_ja = json.loads(raw_ja) if raw_ja.strip() else None
+                parsed_zh = json.loads(raw_zh) if raw_zh.strip() else None
+            except Exception as e:
+                return f"JSON 解析失败: {e}", 400
+
+            if parsed_ja is not None:
+                ja_data[section] = parsed_ja
+                save_lang_content("ja", ja_data)
+            if parsed_zh is not None:
+                zh_data[section] = parsed_zh
+                save_lang_content("zh-cn", zh_data)
+
+            build_pages()
+            return redirect(url_for("admin_index"))
+
+        current_ja = ja_data.get(section, "")
+        current_zh = zh_data.get(section, "")
+        tpl = """
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>同时编辑 · {{ section }}</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; margin: 24px; background: var(--bg); color: var(--fg); }
+    body.light { --bg: #ffffff; --fg: #0f172a; --card: #ffffff; --border: #e5e7eb; }
+    body.dark  { --bg: #0b1220; --fg: #e5e7eb; --card: #0f172a; --border: #233240; }
+    .grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); grid-gap: 16px; align-items: stretch; }
+    .editor { border:1px solid var(--border); border-radius:8px; background: var(--card); min-width:0; }
+    .editor-head { display:flex; justify-content:space-between; align-items:center; padding:8px 12px; border-bottom:1px solid var(--border); }
+    .editor-body { height: 70vh; overflow:auto; }
+    .row { margin: 12px 0; }
+    .btn { background: #16a34a; color: #fff; padding: 10px 14px; border: 0; border-radius: 6px; cursor: pointer; }
+    .toggle { background:#334155; color:#fff; border:0; padding:8px 12px; border-radius:6px; cursor:pointer; }
+    /* 简易代码高亮风格 */
+    .CodeMirror.cm-s-custom { background: var(--card); color: var(--fg); height:100%; }
+    .cm-s-custom .cm-string   { color: #16a34a; }
+    .cm-s-custom .cm-number   { color: #f59e0b; }
+    .cm-s-custom .cm-atom     { color: #38bdf8; }
+    .cm-s-custom .cm-property { color: #60a5fa; }
+    .cm-s-custom .cm-punctuation { color: #e5e7eb; }
+    .cm-s-custom .CodeMirror-linenumber { color:#94a3b8; }
+    .CodeMirror-gutters { background: var(--card); border-right:1px solid var(--border); }
+  </style>
+  <!-- 引入 CodeMirror （CDN，本地使用也可） -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/javascript/javascript.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/addon/edit/closebrackets.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/addon/edit/matchbrackets.js"></script>
+  <script>
+    (function(){
+      const mode = localStorage.getItem('adminTheme') || 'light';
+      document.addEventListener('DOMContentLoaded', function(){ document.body.classList.add(mode); });
+    })();
+  </script>
+</head>
+<body>
+  <div style="margin-bottom:12px"><a href="{{ url_for('admin_index') }}">← 返回仪表盘</a></div>
+  <h3>同时编辑分类：{{ section }}</h3>
+  <div class="row"><button class="toggle" onclick="(function(){const b=document.body;const next=b.classList.contains('dark')?'light':'dark';b.classList.remove('light','dark');b.classList.add(next);localStorage.setItem('adminTheme',next);})();">明/暗切换</button></div>
+  <form method="post" id="biForm">
+    <div class="grid">
+      <div class="editor">
+        <div class="editor-head"><strong>JA（日文）</strong></div>
+        <div class="editor-body"><textarea id="editor_ja" name="payload_ja">{{ ja_content }}</textarea></div>
+        <div class="row" style="padding:8px 12px">文件：{{ ja_path }}</div>
+      </div>
+      <div class="editor">
+        <div class="editor-head"><strong>ZH-CN（中文）</strong></div>
+        <div class="editor-body"><textarea id="editor_zh" name="payload_zh">{{ zh_content }}</textarea></div>
+        <div class="row" style="padding:8px 12px">文件：{{ zh_path }}</div>
+      </div>
+    </div>
+    <div class="row">
+      <button class="btn" type="submit">保存两种语言并重新生成页面</button>
+    </div>
+  </form>
+  <script>
+    function setupEditor(id){
+      var cm = CodeMirror.fromTextArea(document.getElementById(id), {
+        mode: {name: 'javascript', json: true},
+        lineNumbers: true,
+        indentUnit: 2,
+        tabSize: 2,
+        smartIndent: true,
+        autoCloseBrackets: true,
+        matchBrackets: true,
+        lineWrapping: true,
+        theme: 'custom'
+      });
+      cm.on('change', function(){ cm.save(); });
+      return cm;
+    }
+    var cmJA = setupEditor('editor_ja');
+    var cmZH = setupEditor('editor_zh');
+  </script>
+</body>
+</html>
+        """
+        return render_template_string(
+            tpl,
+            section=section,
+            ja_content=pretty_json(current_ja),
+            zh_content=pretty_json(current_zh),
+            ja_path=str(ja_path),
+            zh_path=str(zh_path),
+        )
+
+    @app.route("/admin/edit-full", methods=["GET", "POST"])
+    def admin_edit_full_bi() -> str:
+        zh_path, zh_data = load_lang_content("zh-cn")
+        ja_path, ja_data = load_lang_content("ja")
+        # 以顶级键并集作为分块
+        keys = sorted(set(list(zh_data.keys()) + list(ja_data.keys())))
+        if request.method == "POST":
+            # 增量更新每个分块，避免一次性粘贴整份
+            next_ja = dict(ja_data)
+            next_zh = dict(zh_data)
+            try:
+                for k in keys:
+                    sj = request.form.get(f"payload_ja__{k}")
+                    sz = request.form.get(f"payload_zh__{k}")
+                    if sj is not None and sj.strip() != "":
+                        next_ja[k] = json.loads(sj)
+                    if sz is not None and sz.strip() != "":
+                        next_zh[k] = json.loads(sz)
+            except Exception as e:
+                return f"JSON 解析失败: {e}", 400
+
+            save_lang_content("ja", next_ja)
+            save_lang_content("zh-cn", next_zh)
+            build_pages()
+            return redirect(url_for("admin_index"))
+
+        tpl = """
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>同时编辑整份 JSON</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; margin: 24px; background: var(--bg); color: var(--fg); }
+    body.light { --bg: #ffffff; --fg: #0f172a; --card: #ffffff; --border: #e5e7eb; }
+    body.dark  { --bg: #0b1220; --fg: #e5e7eb; --card: #0f172a; --border: #233240; }
+    .grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); grid-gap: 16px; }
+    .editor { border:1px solid var(--border); border-radius:8px; background: var(--card); min-width:0; }
+    .editor-head { display:flex; justify-content:space-between; align-items:center; padding:8px 12px; border-bottom:1px solid var(--border); }
+    .editor-body { height: 70vh; overflow:auto; }
+    .row { margin: 12px 0; }
+    .btn { background: #16a34a; color: #fff; padding: 10px 14px; border: 0; border-radius: 6px; cursor: pointer; }
+    .toggle { background:#334155; color:#fff; border:0; padding:8px 12px; border-radius:6px; cursor:pointer; }
+    .CodeMirror.cm-s-custom { background: var(--card); color: var(--fg); height:100%; }
+    .cm-s-custom .cm-string   { color: #16a34a; }
+    .cm-s-custom .cm-number   { color: #f59e0b; }
+    .cm-s-custom .cm-atom     { color: #38bdf8; }
+    .cm-s-custom .cm-property { color: #60a5fa; }
+    .cm-s-custom .CodeMirror-linenumber { color:#94a3b8; }
+    .CodeMirror-gutters { background: var(--card); border-right:1px solid var(--border); }
+  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/javascript/javascript.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/addon/edit/closebrackets.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/addon/edit/matchbrackets.js"></script>
+  <script>
+    (function(){
+      const mode = localStorage.getItem('adminTheme') || 'light';
+      document.addEventListener('DOMContentLoaded', function(){ document.body.classList.add(mode); });
+    })();
+  </script>
+</head>
+<body>
+  <div style="margin-bottom:12px"><a href="{{ url_for('admin_dashboard') }}">← 返回分类仪表盘</a></div>
+  <h3>同时编辑整份 JSON（分块展示）</h3>
+  <div class="row"><button class="toggle" onclick="(function(){const b=document.body;const next=b.classList.contains('dark')?'light':'dark';b.classList.remove('light','dark');b.classList.add(next);localStorage.setItem('adminTheme',next);})();">明/暗切换</button></div>
+  <form method="post" id="fullForm">
+    {% for k in keys %}
+      <div class="card" style="border:1px solid var(--border); border-radius:8px; padding:12px; margin:16px 0; background: var(--card);">
+        <h4 style="margin:0 0 8px 0">{{ k }}</h4>
+        <div class="grid">
+          <div class="editor">
+            <div class="editor-head"><strong>JA（日文）</strong></div>
+            <div class="editor-body"><textarea id="editor_full_ja__{{ k }}" name="payload_ja__{{ k }}">{{ sections_ja[k] }}</textarea></div>
+          </div>
+          <div class="editor">
+            <div class="editor-head"><strong>ZH-CN（中文）</strong></div>
+            <div class="editor-body"><textarea id="editor_full_zh__{{ k }}" name="payload_zh__{{ k }}">{{ sections_zh[k] }}</textarea></div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+    <div class="row">
+      <button class="btn" type="submit">保存两种语言并重新生成页面</button>
+    </div>
+  </form>
+  <script>
+    function setupEditor(id){
+      var cm = CodeMirror.fromTextArea(document.getElementById(id), {
+        mode: {name: 'javascript', json: true},
+        lineNumbers: true,
+        indentUnit: 2,
+        tabSize: 2,
+        smartIndent: true,
+        autoCloseBrackets: true,
+        matchBrackets: true,
+        lineWrapping: true,
+        theme: 'custom'
+      });
+      cm.on('change', function(){ cm.save(); });
+      return cm;
+    }
+    function syncScrollPair(a,b){
+      let lock=false;
+      a.on('scroll', function(){ if(lock) return; lock=true; const ia=a.getScrollInfo(); const rb=b.getScrollInfo(); const r=ia.top/(ia.height-ia.clientHeight||1); b.scrollTo(null, r*(rb.height-rb.clientHeight)); lock=false; });
+    }
+    (function(){
+      var keys = {{ keys|tojson }};
+      keys.forEach(function(k){
+        var cmJA = setupEditor('editor_full_ja__'+k);
+        var cmZH = setupEditor('editor_full_zh__'+k);
+        syncScrollPair(cmJA, cmZH);
+        syncScrollPair(cmZH, cmJA);
+      });
+    })();
+  </script>
+</body>
+</html>
+        """
+        sections_ja = {k: pretty_json(ja_data.get(k, "")) for k in keys}
+        sections_zh = {k: pretty_json(zh_data.get(k, "")) for k in keys}
+        return render_template_string(
+            tpl,
+            keys=keys,
+            sections_ja=sections_ja,
+            sections_zh=sections_zh,
+            ja_path=str(ja_path),
+            zh_path=str(zh_path),
+        )
     print(f"🛠️ 后台已启动: http://127.0.0.1:{port}/admin")
     app.run(host="127.0.0.1", port=port, debug=False)
 
