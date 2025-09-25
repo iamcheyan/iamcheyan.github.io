@@ -308,6 +308,8 @@ def minify_html(html: str) -> str:
     """压缩HTML为单行，移除多余空白与换行。"""
     if not html:
         return ""
+    # 移除HTML注释
+    html = re.sub(r"<!--[\s\S]*?-->", "", html)
     # 折叠标签间空白
     html = re.sub(r">\s+<", "><", html)
     # 折叠连续空白为单个空格（保留文本中的必要空格）
