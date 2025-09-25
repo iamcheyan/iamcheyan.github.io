@@ -11,6 +11,13 @@ import sys
 from html import escape
 from pathlib import Path
 from textwrap import indent
+from typing import Any, Tuple
+
+try:
+    from flask import Flask, request, redirect
+    from flask import url_for, render_template_string
+except Exception:  # Flask 可能尚未安装
+    Flask = None  # type: ignore
 
 BASE_DIR = Path(__file__).parent
 DATA_DIR = BASE_DIR / "data"
@@ -35,6 +42,23 @@ LANGUAGES = [
 def load_content(path: Path) -> dict:
     with path.open(encoding="utf-8") as fp:
         return json.load(fp)
+
+
+def load_lang_content(lang_code: str) -> Tuple[Path, dict]:
+    """根据语言代码加载 JSON 内容并返回(路径, 数据)。"""
+    mapping = {cfg["code"]: cfg["json"] for cfg in LANGUAGES}
+    if lang_code not in mapping:
+        raise ValueError(f"Unsupported language code: {lang_code}")
+    path = mapping[lang_code]
+    return path, load_content(path)
+
+
+def save_lang_content(lang_code: str, data: dict) -> None:
+    """保存指定语言的数据到对应 JSON 文件。"""
+    path, _ = load_lang_content(lang_code)
+    path.write_text(
+        json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
 
 
 def load_template() -> str:
@@ -362,9 +386,16 @@ def main() -> None:
         const="push",
         help="添加此参数将自动推送到GitHub（例如: python3 app.py push）"
     )
+    parser.add_argument(
+        "--port",
+        type=int,
+        default=5001,
+        help="后台管理端口，默认 5001"
+    )
     
     args = parser.parse_args()
     should_push = args.push is not None
+    admin_port: int = args.port
     
     # 构建页面
     build_pages()
@@ -374,6 +405,211 @@ def main() -> None:
         auto_push()
     else:
         print("💡 提示: 使用 'python3 app.py push' 来自动推送到GitHub")
+
+    # 启动 Flask 后台
+    start_admin_server(admin_port)
+
+
+# ========================= Flask 后台（无登录，本地管理） =========================
+
+def start_admin_server(port: int = 5001) -> None:
+    """启动后台管理服务。"""
+    if Flask is None:
+        print("⚠️ 未安装 Flask，无法启动后台。请先执行: pip install flask\n")
+        return
+
+    app = Flask(__name__)
+
+    def get_top_level_keys(data: dict) -> list[str]:
+        return list(data.keys())
+
+    def pretty_json(value: Any) -> str:
+        return json.dumps(value, ensure_ascii=False, indent=2)
+
+    @app.route("/admin")
+    def admin_index() -> str:
+        # 展示语言列表
+        langs = [{"code": cfg["code"], "name": cfg["code"]} for cfg in LANGUAGES]
+        tpl = """
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>后台管理</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; margin: 24px; }
+    a { text-decoration: none; color: #0b5ed7; }
+    .card { border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; margin: 12px 0; }
+    .muted { color: #6b7280; }
+    .btn { display: inline-block; background: #0b5ed7; color: #fff; padding: 8px 12px; border-radius: 6px; }
+  </style>
+  </head>
+<body>
+  <h2>后台管理</h2>
+  <p class="muted">按语言选择后可编辑各分类内容；保存会自动重新生成首页。</p>
+  <div>
+  {% for lang in langs %}
+    <div class="card">
+      <div><strong>语言：</strong>{{ lang.code }}</div>
+      <div style="margin-top:8px">
+        <a class="btn" href="{{ url_for('admin_lang', lang_code=lang.code) }}">进入 {{ lang.code }} 后台</a>
+      </div>
+    </div>
+  {% endfor %}
+  </div>
+</body>
+</html>
+        """
+        return render_template_string(tpl, langs=langs)
+
+    @app.route("/admin/<lang_code>")
+    def admin_lang(lang_code: str) -> str:
+        try:
+            _, data = load_lang_content(lang_code)
+        except Exception as e:
+            return f"加载语言失败: {e}", 400
+
+        keys = get_top_level_keys(data)
+        tpl = """
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>后台管理 - {{ lang_code }}</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; margin: 24px; }
+    a { text-decoration: none; color: #0b5ed7; }
+    .card { border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; margin: 12px 0; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); grid-gap: 12px; }
+    .muted { color: #6b7280; }
+    .btn { display: inline-block; background: #0b5ed7; color: #fff; padding: 8px 12px; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  <div style="margin-bottom:12px"><a href="{{ url_for('admin_index') }}">← 返回</a></div>
+  <h2>语言：{{ lang_code }}</h2>
+  <p class="muted">选择要编辑的分类（顶级键）。</p>
+  <p><a class="btn" href="{{ url_for('admin_edit_full', lang_code=lang_code) }}">编辑整份 JSON</a></p>
+  <div class="grid">
+    {% for k in keys %}
+      <div class="card">
+        <div><strong>{{ k }}</strong></div>
+        <div style="margin-top:8px"><a class="btn" href="{{ url_for('admin_edit_section', lang_code=lang_code, section=k) }}">编辑</a></div>
+      </div>
+    {% endfor %}
+  </div>
+</body>
+</html>
+        """
+        return render_template_string(tpl, lang_code=lang_code, keys=keys)
+
+    @app.route("/admin/<lang_code>/edit", methods=["GET", "POST"])
+    def admin_edit_full(lang_code: str) -> str:
+        path, data = load_lang_content(lang_code)
+        if request.method == "POST":
+            raw = request.form.get("payload", "")
+            try:
+                parsed = json.loads(raw)
+                if not isinstance(parsed, dict):
+                    return "提交的数据必须是 JSON 对象", 400
+            except Exception as e:
+                return f"JSON 解析失败: {e}", 400
+
+            save_lang_content(lang_code, parsed)
+            build_pages()
+            return redirect(url_for("admin_lang", lang_code=lang_code))
+
+        tpl = """
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>编辑 JSON - {{ lang_code }}</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; margin: 24px; }
+    textarea { width: 100%; height: 70vh; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 13px; }
+    .row { margin: 12px 0; }
+    .btn { background: #16a34a; color: #fff; padding: 10px 14px; border: 0; border-radius: 6px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div style="margin-bottom:12px"><a href="{{ url_for('admin_lang', lang_code=lang_code) }}">← 返回</a></div>
+  <h3>编辑整份 JSON（{{ lang_code }}）</h3>
+  <form method="post">
+    <div class="row">
+      <textarea name="payload">{{ content }}</textarea>
+    </div>
+    <div class="row">
+      <button class="btn" type="submit">保存并重新生成页面</button>
+    </div>
+    <div class="row">文件：{{ path }}</div>
+  </form>
+</body>
+</html>
+        """
+        return render_template_string(
+            tpl, lang_code=lang_code, content=pretty_json(data), path=str(path)
+        )
+
+    @app.route("/admin/<lang_code>/edit/<section>", methods=["GET", "POST"])
+    def admin_edit_section(lang_code: str, section: str) -> str:
+        path, data = load_lang_content(lang_code)
+        if request.method == "POST":
+            raw = request.form.get("payload", "")
+            try:
+                parsed = json.loads(raw)
+            except Exception as e:
+                return f"JSON 解析失败: {e}", 400
+
+            data[section] = parsed
+            save_lang_content(lang_code, data)
+            build_pages()
+            return redirect(url_for("admin_lang", lang_code=lang_code))
+
+        current = data.get(section, None)
+        if current is None:
+            current = ""
+
+        tpl = """
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>编辑 {{ section }} - {{ lang_code }}</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; margin: 24px; }
+    textarea { width: 100%; height: 70vh; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 13px; }
+    .row { margin: 12px 0; }
+    .btn { background: #16a34a; color: #fff; padding: 10px 14px; border: 0; border-radius: 6px; cursor: pointer; }
+    .muted { color: #6b7280; }
+  </style>
+</head>
+<body>
+  <div style="margin-bottom:12px"><a href="{{ url_for('admin_lang', lang_code=lang_code) }}">← 返回</a></div>
+  <h3>编辑：{{ section }}（{{ lang_code }}）</h3>
+  <p class="muted">此处编辑的是该分类对应的 JSON 片段，可为对象、数组或字符串。</p>
+  <form method="post">
+    <div class="row">
+      <textarea name="payload">{{ content }}</textarea>
+    </div>
+    <div class="row">
+      <button class="btn" type="submit">保存并重新生成页面</button>
+    </div>
+    <div class="row">文件：{{ path }}</div>
+  </form>
+</body>
+</html>
+        """
+        return render_template_string(
+            tpl,
+            lang_code=lang_code,
+            section=section,
+            content=pretty_json(current),
+            path=str(path),
+        )
+
+    print(f"🛠️ 后台已启动: http://127.0.0.1:{port}/admin")
+    app.run(host="127.0.0.1", port=port, debug=False)
 
 
 if __name__ == "__main__":
