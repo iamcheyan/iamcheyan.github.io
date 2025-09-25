@@ -95,7 +95,7 @@ def replace_template_placeholders(template: str, data: dict, lang_config: dict) 
     for element_id, content in replacements.items():
         if content:
             # 定义包含HTML标签的字段，这些字段不需要HTML转义
-            html_fields = ['about-me-title', 'about-me-content', 'contact-title', 'projects-books-title', 'books-title', 'projects-title', 'events-title']
+            html_fields = ['about-me-title', 'about-me-content', 'contact-title', 'projects-books-title', 'books-title', 'projects-title', 'events-title', 'video-title']
             
             # 特殊处理 img 标签的 alt 属性
             if element_id == 'video-alt':
@@ -155,15 +155,20 @@ def replace_template_placeholders(template: str, data: dict, lang_config: dict) 
     events_html = render_events(data.get("events", {}).get("years", []))
     
     if web_projects_html:
-        template = re.sub(r'(<div class="c" id="web-project-items">)(</div>)', rf'\1\n{indent_html(web_projects_html, "\t\t\t")}\n\t\t\2', template)
+        _indent_web = indent_html(web_projects_html, "\t\t\t")
+        template = re.sub(r'(<div class="c" id="web-project-items">)(</div>)', rf'\1\n{_indent_web}\n\t\t\2', template)
     if books_html:
-        template = re.sub(r'(<div class="c" id="project-items">)(</div>)', rf'\1\n{indent_html(books_html, "\t\t\t")}\n\t\t\2', template)
+        _indent_books = indent_html(books_html, "\t\t\t")
+        template = re.sub(r'(<div class="c" id="project-items">)(</div>)', rf'\1\n{_indent_books}\n\t\t\2', template)
     if projects_list_html:
-        template = re.sub(r'(<ul class="b" id="projects-list">)(</ul>)', rf'\1\n{indent_html(projects_list_html, "\t\t\t")}\n\t\t\2', template)
+        _indent_proj_list = indent_html(projects_list_html, "\t\t\t")
+        template = re.sub(r'(<ul class="b" id="projects-list">)(</ul>)', rf'\1\n{_indent_proj_list}\n\t\t\2', template)
     if projects_img_html:
-        template = re.sub(r'(<ul class="c" id="projects-img-list">)(</ul>)', rf'\1\n{indent_html(projects_img_html, "\t\t\t")}\n\t\t\2', template)
+        _indent_proj_img = indent_html(projects_img_html, "\t\t\t")
+        template = re.sub(r'(<ul class="c" id="projects-img-list">)(</ul>)', rf'\1\n{_indent_proj_img}\n\t\t\2', template)
     if events_html:
-        template = re.sub(r'(<div class="b" id="events-list">)(</div>)', rf'\1\n{indent_html(events_html, "\t\t\t")}\n\t\t\2', template)
+        _indent_events = indent_html(events_html, "\t\t\t")
+        template = re.sub(r'(<div class="b" id="events-list">)(</div>)', rf'\1\n{_indent_events}\n\t\t\2', template)
     
     # 替换书籍平台信息
     books_platforms = data.get("books", {}).get("platforms", "")
