@@ -5,7 +5,7 @@ function openVideoModal() {
 	const player = document.getElementById('youtube-player');
 	
 	// 使用澈言的纪录片视频
-	const videoId = 'fNH7k-i9IdA'; // 澈言的纪录片视频
+	const videoId = 'nJZTpk1Lf_8'; // 澈言的纪录片视频
 	player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
 	
 	modal.style.display = 'block';
