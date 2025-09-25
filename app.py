@@ -304,10 +304,25 @@ def render_page(lang_config: dict, data: dict) -> str:
     return replace_template_placeholders(template, data, lang_config)
 
 
+def minify_html(html: str) -> str:
+    """压缩HTML为单行，移除多余空白与换行。"""
+    if not html:
+        return ""
+    # 折叠标签间空白
+    html = re.sub(r">\s+<", "><", html)
+    # 折叠连续空白为单个空格（保留文本中的必要空格）
+    html = re.sub(r"\s{2,}", " ", html)
+    # 移除换行与制表
+    html = html.replace("\n", "").replace("\r", "").replace("\t", "")
+    return html.strip()
+
+
 def build_pages() -> None:
     for lang in LANGUAGES:
         content = load_content(lang["json"])
         html_output = render_page(lang, content)
+        # 输出前进行压缩
+        html_output = minify_html(html_output)
         lang["output"].write_text(html_output, encoding="utf-8")
         print(f"Generated {lang['output'].relative_to(BASE_DIR)}")
 
