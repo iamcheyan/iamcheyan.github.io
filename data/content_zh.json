@@ -23,6 +23,10 @@
     "email": "me@iamcheyan.com",
     "email_link": "mailto:me@iamcheyan.com"
   },
+  "video": {
+    "title": "关于我的纪录片",
+    "alt": "关于我的纪录片"
+  },
   "resume_download_text": "下载简历（PDF）",
   "github_project_link": "在GitHub仓库里查看本项目",
   "github_project_url": "https://github.com/iamcheyan/iamcheyan.github.io",

@@ -804,3 +804,217 @@ che .b1 {
     }
     
 }
+
+.youtube-video {
+    margin: 1.5rem 0 5rem 0;
+}
+/* YouTube 视频图片容器样式 */
+.youtube-video-image {
+    width: 100%;
+    max-width: 560px;
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.youtube-video-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.youtube-video-image::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    background: url('Youtube_logo.png') no-repeat center center;
+    background-size: contain;
+    z-index: 2;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 4px 15px rgba(255, 0, 0, 0.3));
+    pointer-events: none;
+}
+
+.youtube-video-image:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.youtube-video-image:hover::before {
+    transform: translate(-50%, -50%) scale(1.1);
+    filter: drop-shadow(0 6px 20px rgba(255, 0, 0, 0.4));
+}
+
+.youtube-video-image:hover img {
+    opacity: 0.85;
+}
+
+/* 响应式设计 - YouTube 视频图片容器 */
+@media screen and (max-width: 1024px) {
+    .youtube-video-image {
+        max-width: 480px;
+    }
+    .youtube-video-image::before {
+        width: 70px;
+        height: 70px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .youtube-video-image {
+        max-width: 100%;
+        border-radius: 8px;
+    }
+    .youtube-video-image img {
+        border-radius: 8px;
+    }
+    .youtube-video-image::before {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+@media screen and (max-width: 481px) {
+    .youtube-video-image {
+        border-radius: 6px;
+    }
+    .youtube-video-image img {
+        border-radius: 6px;
+    }
+    .youtube-video-image::before {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+/* 视频模态框样式 */
+.video-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    animation: fadeIn 0.3s ease;
+}
+
+.video-modal-content {
+    position: relative;
+    background-color: #000;
+    margin: 5% auto;
+    padding: 0;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 800px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    animation: slideIn 0.3s ease;
+    overflow: hidden;
+}
+
+.video-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #fff;
+    font-size: 35px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 10001;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: background-color 0.3s ease;
+}
+
+.video-close:hover {
+    background-color: rgba(255, 0, 0, 0.8);
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%; /* 16:9 宽高比 */
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 12px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* 响应式设计 - 视频模态框 */
+@media screen and (max-width: 768px) {
+    .video-modal-content {
+        width: 95%;
+        margin: 10% auto;
+    }
+    
+    .video-close {
+        top: 10px;
+        right: 15px;
+        font-size: 30px;
+        width: 35px;
+        height: 35px;
+    }
+}
+
+@media screen and (max-width: 481px) {
+    .video-modal-content {
+        width: 98%;
+        margin: 15% auto;
+        border-radius: 8px;
+    }
+    
+    .video-container iframe {
+        border-radius: 8px;
+    }
+    
+    .video-close {
+        top: 8px;
+        right: 12px;
+        font-size: 25px;
+        width: 30px;
+        height: 30px;
+    }
+}

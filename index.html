@@ -105,6 +105,30 @@
 					</form>
 				</div>
 			</nav>
+			<div class="youtube-video" onclick="openVideoModal()">
+				<div class="youtube-video-image">
+					<img src="static/video.png" alt="" id="video-alt">
+				</div>
+				<div class="youtube-video-title">
+					<p id="video-title">私に関するドキュメンタリー</p>
+				</div>
+			</div>
+			
+			<!-- 视频模态框 -->
+			<div id="video-modal" class="video-modal">
+				<div class="video-modal-content">
+					<span class="video-close" onclick="closeVideoModal()">&times;</span>
+					<div class="video-container">
+						<iframe id="youtube-player" 
+								src="" 
+								title="YouTube video player" 
+								frameborder="0" 
+								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+								allowfullscreen>
+						</iframe>
+					</div>
+				</div>
+			</div>
 			<h3 id="contact-title">連絡先<b>Contact me</b></h3>
 			<p class="link">
 				<span id="contact-twitter-label"></span>

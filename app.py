@@ -88,6 +88,8 @@ def replace_template_placeholders(template: str, data: dict, lang_config: dict) 
         'contact-email': data.get("contact", {}).get("email", ""),
         'resume-download-btn': data.get("resume_download_text", ""),
         'github-project-link': data.get("github_project_link", ""),
+        'video-title': data.get("video", {}).get("title", ""),
+        'video-alt': data.get("video", {}).get("alt", ""),
     }
     
     for element_id, content in replacements.items():
@@ -95,7 +97,14 @@ def replace_template_placeholders(template: str, data: dict, lang_config: dict) 
             # 定义包含HTML标签的字段，这些字段不需要HTML转义
             html_fields = ['about-me-title', 'about-me-content', 'contact-title', 'projects-books-title', 'books-title', 'projects-title', 'events-title']
             
-            if element_id in html_fields:
+            # 特殊处理 img 标签的 alt 属性
+            if element_id == 'video-alt':
+                template = re.sub(
+                    rf'(<img[^>]*id="{element_id}"[^>]*alt=")[^"]*(")',
+                    rf'\1{html_attr(content)}\2',
+                    template
+                )
+            elif element_id in html_fields:
                 # 对于包含HTML标签的内容，不进行转义
                 # 处理自闭合标签和普通标签
                 template = re.sub(
