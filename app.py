@@ -897,7 +897,7 @@ def start_admin_server(port: int = 5001) -> None:
             zh_path=str(zh_path),
         )
     print(f"🛠️ 后台已启动: http://127.0.0.1:{port}/admin")
-    app.run(host="127.0.0.1", port=port, debug=False)
+    app.run(host="127.0.0.1", port=port, debug=True)
 
 
 if __name__ == "__main__":
