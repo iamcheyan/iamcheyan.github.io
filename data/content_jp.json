@@ -99,6 +99,12 @@
   },
   "web_project_list": [
     {
+      "title": "Fudoki",
+      "img": "static/fudoki.png",
+      "link": "https://fudoki.iamcheyan.com/",
+      "extra": "<p>日本語学習者と自然言語処理研究者向けに設計された、ブラウザ上で動作する日本語テキスト解析ツール。</p><p>学習ツール / 公開：2025年</p>"
+    },
+    {
       "title": "Terebi",
       "img": "static/terebi.png",
       "link": "https://terebi.iamcheyan.com/",
