@@ -144,4 +144,51 @@ const themeManager = new ThemeManager();
 
 // 将主题管理器暴露到全局，方便其他脚本使用
 window.themeManager = themeManager;
+(function(){
+  // 事件照片弹窗逻辑
+  function openEventPhotoModal(src, caption, title, date){
+    var modal = document.getElementById('event-photo-modal');
+    if(!modal) return;
+    var img = document.getElementById('event-photo-modal-img');
+    var titleEl = document.getElementById('event-photo-modal-title');
+    var descEl = document.getElementById('event-photo-modal-desc');
+    var dateEl = document.getElementById('event-photo-modal-date');
+    if(img){ img.src = src || ''; img.alt = caption || title || ''; }
+    if(titleEl){ titleEl.textContent = title || ''; }
+    if(descEl){ descEl.textContent = caption || ''; }
+    if(dateEl){ dateEl.textContent = date || ''; }
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeEventPhotoModal(){
+    var modal = document.getElementById('event-photo-modal');
+    if(!modal) return;
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // 点击遮罩关闭
+  window.addEventListener('click', function(e){
+    var modal = document.getElementById('event-photo-modal');
+    if(modal && modal.classList.contains('open')){
+      if(e.target === modal){ closeEventPhotoModal(); }
+    }
+  });
+  // ESC 关闭
+  window.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeEventPhotoModal(); });
+  // 关闭按钮
+  document.addEventListener('click', function(e){ if(e.target && e.target.classList && e.target.classList.contains('photo-close')) closeEventPhotoModal(); });
+
+  // 事件图片点击打开弹窗
+  document.addEventListener('click', function(e){
+    var fig = e.target.closest && e.target.closest('.event-photo-figure');
+    if(!fig) return;
+    var src = fig.getAttribute('data-photo') || (fig.querySelector('img') ? fig.querySelector('img').src : '');
+    var caption = fig.getAttribute('data-caption') || '';
+    var title = fig.getAttribute('data-title') || '';
+    var date = fig.getAttribute('data-date') || '';
+    openEventPhotoModal(src, caption, title, date);
+  });
+})();
 

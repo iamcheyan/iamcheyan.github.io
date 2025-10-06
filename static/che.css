@@ -4,6 +4,44 @@
     transition: all .3s;
 }
 
+/* 事件照片弹窗样式 */
+.photo-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+    display: none;
+    z-index: 9999;
+}
+.photo-modal.open { display: block; }
+.photo-modal-content {
+    width: min(92%, 900px);
+    margin: 6% auto;
+    background: var(--bg-color);
+    color: var(--text-color);
+    /* border-radius: 12px; */
+    border: 1px solid var(--border-color);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+    position: relative;
+}
+.photo-close {
+    position: absolute;
+    right: 14px;
+    top: 10px;
+    font-size: 28px;
+    cursor: pointer;
+    color: var(--text-color);
+}
+.photo-container { padding: 1rem; }
+.photo-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+    /* border-radius: 8px; */
+}
+.photo-modal-caption { padding: 0.75rem 0.5rem 1rem; }
+.photo-modal-caption h4 { margin: 0 0 0.5rem; font-size: 1.05rem; }
+.photo-modal-caption p { margin: 0.25rem 0; }
+
 /* 事件照片横幅样式 */
 .event-photo-banner {
     width: 100%;
@@ -584,7 +622,8 @@ che .b1 {
     margin-bottom: 4rem;
 }
 .reports .link li {
-    padding: 0 0 2px 0;
+    padding: 1px 0;
+    border-bottom: 1px solid #e4e4e4;
 }
 .reports h5 {
     font-size: 1.17em;

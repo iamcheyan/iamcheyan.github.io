@@ -94,7 +94,7 @@ def render_event_photo_banner(events: list[dict]) -> str:
                 return (
                     """
 		<section class="event-photo-banner-section">
-			<figure class="event-photo-figure">
+					<figure class="event-photo-figure" role="button" tabindex="0" data-photo="{photo}" data-caption="{caption}">
 				<img class="event-photo-img" src="{photo}" alt="{caption}">
 				<figcaption class="event-photo-caption">{caption}</figcaption>
 			</figure>
