@@ -71,26 +71,16 @@ class ThemeManager {
 		// 绑定点击事件
 		this.themeToggle.addEventListener('click', () => this.toggleTheme());
 		
-		// 监听系统主题变化
-		if (window.matchMedia) {
-			const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-			mediaQuery.addEventListener('change', (e) => {
-				if (!localStorage.getItem('theme-preference')) {
-					this.setTheme(e.matches ? 'dark' : 'light');
-				}
-			});
-		}
+		// 不跟随系统主题变化：移除自动监听
 	}
 
 	loadSavedTheme() {
 		const savedTheme = localStorage.getItem('theme-preference');
-		
 		if (savedTheme) {
 			this.setTheme(savedTheme);
 		} else {
-			// 如果没有保存的主题，检查系统偏好
-			const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-			this.setTheme(prefersDark ? 'dark' : 'light');
+			// 默认浅色，不根据系统主题变更
+			this.setTheme('light');
 		}
 	}
 
