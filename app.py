@@ -81,6 +81,29 @@ def indent_html(html_snippet: str, prefix: str) -> str:
     return indent(html_snippet.strip(), prefix, lambda _: True)
 
 
+def render_event_photo_banner(events: list[dict]) -> str:
+    """从 events 中选择第一个同时包含 photo 与 caption 的项，渲染为横幅。"""
+    for block in events:
+        items = block.get("items", [])
+        for item in items:
+            photo = item.get("photo")
+            caption = item.get("caption")
+            if photo and caption:
+                photo_attr = html_attr(photo)
+                caption_text = html_text(caption)
+                return (
+                    """
+		<section class="event-photo-banner-section">
+			<figure class="event-photo-figure">
+				<img class="event-photo-img" src="{photo}" alt="{caption}">
+				<figcaption class="event-photo-caption">{caption}</figcaption>
+			</figure>
+		</section>
+                    """.format(photo=photo_attr, caption=caption_text).strip("\n")
+                )
+    return ""
+
+
 def replace_template_placeholders(template: str, data: dict, lang_config: dict) -> str:
     """Replace placeholders in template with actual data."""
     # 设置语言属性
@@ -171,6 +194,13 @@ def replace_template_placeholders(template: str, data: dict, lang_config: dict) 
         github_link_text = data.get("github_project_link", "GitHub Repository")
         template = re.sub(r'(<a[^>]*id="github-project-link"[^>]*>)[^<]*(</a>)', rf'\1{html_text(github_link_text)}\2', template)
     
+    # 注入事件照片横幅（若存在）
+    events_years = data.get("events", {}).get("years", [])
+    banner_html = render_event_photo_banner(events_years)
+    if banner_html:
+        _indent_banner = indent_html(banner_html, "\t\t")
+        template = re.sub(r'(<div class="event-photo-banner" id="event-photo-banner">)(</div>)', rf'\1\n{_indent_banner}\n\t\t\2', template)
+
     # 生成并替换项目列表
     web_projects_html = render_web_projects(data.get("web_project_list", []))
     books_html = render_books(data.get("books", {}).get("list", []))
@@ -312,12 +342,27 @@ def render_events(events: list[dict]) -> str:
             text_value = html_text(item.get("text", ""))
             date_value = html_text(item.get("date", ""))
             link = item.get("link")
+            photo = item.get("photo")
+            caption = item.get("caption")
             if link:
                 link_attr = html_attr(link)
                 item_html = f"<a href=\"{link_attr}\" target=\"_blank\">{text_value}</a>（{date_value}）"
             else:
                 item_html = f"{text_value}（{date_value}）"
-            parts.append(f"\t\t\t\t<li>{item_html}</li>")
+            if photo and caption:
+                photo_attr = html_attr(photo)
+                caption_text = html_text(caption)
+                parts.append(
+                    """
+\t\t\t\t<li>
+\t\t\t\t\t<figure class=\"event-photo-figure\">
+\t\t\t\t\t\t<img class=\"event-photo-img\" src=\"{photo}\" alt=\"{caption}\">
+\t\t\t\t\t\t<figcaption class=\"event-photo-caption\">{caption}</figcaption>
+\t\t\t\t\t</figure>{item_html}
+\t\t\t\t</li>""".format(item_html=item_html, photo=photo_attr, caption=caption_text).strip("\n")
+                )
+            else:
+                parts.append(f"\t\t\t\t<li>{item_html}</li>")
         parts.append("\t\t\t</ul>")
     return "\n".join(parts)
 
@@ -408,11 +453,46 @@ def main() -> None:
     else:
         print("💡 提示: 使用 'python3 app.py push' 来自动推送到GitHub")
 
-    # 启动 Flask 后台
-    start_admin_server(admin_port)
+    # 启动预览服务（Flask 动态渲染 index，同时已生成静态 HTML）
+    start_preview_server(admin_port)
 
 
 # ========================= Flask 后台（无登录，本地管理） =========================
+
+def start_preview_server(port: int = 5001) -> None:
+    """启动预览服务：动态渲染首页（JA / ZH-CN），并提供静态资源。"""
+    if Flask is None:
+        print("⚠️ 未安装 Flask，无法启动预览服务。请先执行: pip install flask\n")
+        return
+
+    app = Flask(
+        __name__,
+        static_folder=str(BASE_DIR / "static"),
+        static_url_path="/static",
+    )
+
+    @app.route("/")
+    @app.route("/index.html")
+    def preview_index_ja():  # type: ignore[override]
+        try:
+            content = load_content(DATA_DIR / "content_jp.json")
+            ja_cfg = next(x for x in LANGUAGES if x["code"] == "ja")
+            return render_page(ja_cfg, content)
+        except Exception as e:
+            return f"渲染 JA 页面失败: {e}", 500
+
+    @app.route("/zh-cn")
+    @app.route("/index.zh-cn.html")
+    def preview_index_zh():  # type: ignore[override]
+        try:
+            content = load_content(DATA_DIR / "content_zh.json")
+            zh_cfg = next(x for x in LANGUAGES if x["code"] == "zh-cn")
+            return render_page(zh_cfg, content)
+        except Exception as e:
+            return f"渲染 ZH-CN 页面失败: {e}", 500
+
+    print(f"🖥️  预览服务已启动: http://127.0.0.1:{port}  （/ 与 /zh-cn 路由）")
+    app.run(host="127.0.0.1", port=port, debug=True)
 
 def start_admin_server(port: int = 5001) -> None:
     """启动后台管理服务。"""
