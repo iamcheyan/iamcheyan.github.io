@@ -26,21 +26,20 @@
 .photo-close {
     position: absolute;
     right: 14px;
-    top: 10px;
-    font-size: 28px;
+    bottom: 22px;
+    font-size: 50px;
     cursor: pointer;
     color: var(--text-color);
 }
-.photo-container { padding: 1rem; }
+.photo-container { padding: 1rem 1rem 0 1rem }
 .photo-container img {
     width: 100%;
     height: auto;
     display: block;
     /* border-radius: 8px; */
 }
-.photo-modal-caption { padding: 0.75rem 0.5rem 1rem; }
 .photo-modal-caption h4 { margin: 0 0 0.5rem; font-size: 1.05rem; }
-.photo-modal-caption p { margin: 0.25rem 0; }
+.photo-modal-caption p { margin: 10px 0 5px 0 }
 
 /* 事件照片横幅样式 */
 .event-photo-banner {
@@ -57,7 +56,7 @@
     overflow: hidden;
     background: var(--hover-bg);
     margin: 0;
-    width: 150px;
+    width: 120px;
     height: auto;
     filter: drop-shadow(6px 3px 4px #e7e7e7);
 }
@@ -623,7 +622,7 @@ che .b1 {
 }
 .reports .link li {
     padding: 1px 0;
-    border-bottom: 1px solid #e4e4e4;
+    /* border-bottom: 1px solid #e4e4e4; */
 }
 .reports h5 {
     font-size: 1.17em;

@@ -336,11 +336,21 @@ def render_events(events: list[dict]) -> str:
     for block in events:
         year = html_text(block.get("year", ""))
         items = block.get("items", [])
+        # 将当年包含图片的事件置于列表前方（稳定排序，保持原相对顺序）
+        try:
+            items = sorted(items, key=lambda x: 0 if x.get("photo") else 1)
+        except Exception:
+            # 如果排序过程中出现异常，回退到原始顺序
+            pass
         parts.append(f"\t\t\t<h5>{year}</h5>")
         parts.append("\t\t\t<ul class=\"link\">")
         for item in items:
-            text_value = html_text(item.get("text", ""))
-            date_value = html_text(item.get("date", ""))
+            raw_text = item.get("text", "")
+            raw_date = item.get("date", "")
+            text_value = html_text(raw_text)
+            date_value = html_text(raw_date)
+            title_attr = html_attr(raw_text)
+            date_attr = html_attr(raw_date)
             link = item.get("link")
             photo = item.get("photo")
             caption = item.get("caption")
@@ -352,14 +362,15 @@ def render_events(events: list[dict]) -> str:
             if photo and caption:
                 photo_attr = html_attr(photo)
                 caption_text = html_text(caption)
+                caption_attr = html_attr(caption)
                 parts.append(
                     """
 \t\t\t\t<li>
-\t\t\t\t\t<figure class=\"event-photo-figure\">
+\t\t\t\t\t<figure class=\"event-photo-figure\" role=\"button\" tabindex=\"0\" data-photo=\"{photo}\" data-caption=\"{caption_attr}\" data-title=\"{title_attr}\" data-date=\"{date_attr}\">
 \t\t\t\t\t\t<img class=\"event-photo-img\" src=\"{photo}\" alt=\"{caption}\">
 \t\t\t\t\t\t<figcaption class=\"event-photo-caption\">{caption}</figcaption>
 \t\t\t\t\t</figure>{item_html}
-\t\t\t\t</li>""".format(item_html=item_html, photo=photo_attr, caption=caption_text).strip("\n")
+\t\t\t\t</li>""".format(item_html=item_html, photo=photo_attr, caption=caption_text, caption_attr=caption_attr, title_attr=title_attr, date_attr=date_attr).strip("\n")
                 )
             else:
                 parts.append(f"\t\t\t\t<li>{item_html}</li>")

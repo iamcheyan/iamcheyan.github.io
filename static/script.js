@@ -155,7 +155,8 @@ window.themeManager = themeManager;
     var dateEl = document.getElementById('event-photo-modal-date');
     if(img){ img.src = src || ''; img.alt = caption || title || ''; }
     if(titleEl){ titleEl.textContent = title || ''; }
-    if(descEl){ descEl.textContent = caption || ''; }
+    // 允许描述渲染 HTML（例如 <br>）
+    if(descEl){ descEl.innerHTML = caption || ''; }
     if(dateEl){ dateEl.textContent = date || ''; }
     modal.classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -185,7 +186,11 @@ window.themeManager = themeManager;
     var fig = e.target.closest && e.target.closest('.event-photo-figure');
     if(!fig) return;
     var src = fig.getAttribute('data-photo') || (fig.querySelector('img') ? fig.querySelector('img').src : '');
-    var caption = fig.getAttribute('data-caption') || '';
+    var caption = fig.getAttribute('data-caption') || (function(){
+      var capEl = fig.querySelector('.event-photo-caption');
+      // 回退读取 figcaption 的 HTML，以支持内联换行等
+      return capEl ? capEl.innerHTML : '';
+    })();
     var title = fig.getAttribute('data-title') || '';
     var date = fig.getAttribute('data-date') || '';
     openEventPhotoModal(src, caption, title, date);
