@@ -58,15 +58,15 @@
     margin: 0;
     width: 120px;
     height: auto;
-    filter: drop-shadow(6px 3px 4px #e7e7e7);
+    /* filter: drop-shadow(6px 3px 4px #e7e7e7); */
 }
 .event-photo-img {
     display: block;
     width: 100%;
     height: auto;
     object-fit: cover;
-    filter: saturate(1.05) contrast(1.05);
-    transition: transform .25s ease-out;
+    /* filter: saturate(1.05) contrast(1.05); */
+    /* transition: transform .25s ease-out; */
 }
 .event-photo-figure:hover .event-photo-img {
     transform: scale(1.02);
