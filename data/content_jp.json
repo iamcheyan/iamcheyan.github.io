@@ -5,7 +5,7 @@
     "subtitle": "プログラマー、作家、インターネット業界従事者",
     "desc": "美読契約作家、豆瓣読書作家、簡書推薦作家、複数の書籍を出版",
     "me_title": "私について<b>About Me</b>",
-    "me_content": "<h4>徹言｜プログラマー・作家・脚本家</h4> <section id=\"profile\"><p>\n 2009年からフルスタック開発に従事し、Python（Flask・PyWebIO・Streamlit）、JavaScript（ES6+）、MySQLなどの技術スタックを活用してまいりました。2014年に起業し、投資を獲得した経験があります。チームマネジメントやプロジェクト実行の豊富な経験を持ち、書籍出版や映像作品の脚本・制作にも携わるなど、多分野での協働経験を積んでまいりました。<br> 現在は日本でWeb開発職を希望しております。\n  </p>\n</section>\n\n<section id=\"skills\">\n </section>"
+    "me_content": "<h4>徹言｜プログラマー・作家・脚本家</h4> <section id=\"profile\"><p>\n 2009年からフルスタック開発に従事し、Python（Flask・PyWebIO・Streamlit）、JavaScript（ES6+）、MySQLなどの技術スタックを活用してまいりました。2014年に起業し、投資を獲得した経験があります。チームマネジメントやプロジェクト実行の豊富な経験を持ち、書籍出版や映像作品の脚本・制作にも携わるなど、多分野での協働経験を積んでまいりました。\n  </p>\n</section>\n\n<section id=\"skills\">\n </section>"
   },
   "titles": {
     "about_title": "徹言 cheyan",
