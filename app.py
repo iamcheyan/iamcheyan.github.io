@@ -450,9 +450,16 @@ def main() -> None:
         action="store_true",
         help="添加此开关将自动推送到GitHub（例如: python3 app.py --push 或 python3 app.py 5004 --push）"
     )
+    # 开关参数：仅构建，不启动服务器
+    parser.add_argument(
+        "--build-only",
+        action="store_true",
+        help="仅生成静态页面，不启动预览服务器（用于CI/CD环境）"
+    )
     
     args = parser.parse_args()
     should_push: bool = bool(args.push)
+    build_only: bool = bool(args.build_only)
     admin_port: int = int(args.port)
     
     # 构建页面
@@ -461,11 +468,12 @@ def main() -> None:
     # 根据参数决定是否推送
     if should_push:
         auto_push()
-    else:
-        print("💡 提示: 使用 'python3 app.py push' 来自动推送到GitHub")
+    elif not build_only:
+        print("💡 提示: 使用 'python3 app.py --push' 来自动推送到GitHub")
 
-    # 启动预览服务（Flask 动态渲染 index，同时已生成静态 HTML）
-    start_preview_server(admin_port)
+    # 如果不是仅构建模式，则启动预览服务（Flask 动态渲染 index，同时已生成静态 HTML）
+    if not build_only:
+        start_preview_server(admin_port)
 
 
 # ========================= Flask 后台（无登录，本地管理） =========================

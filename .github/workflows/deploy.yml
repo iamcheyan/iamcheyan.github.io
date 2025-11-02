@@ -1,0 +1,62 @@
+name: 自动生成静态页面
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:  # 允许手动触发
+
+permissions:
+  contents: write  # 允许推送代码
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0  # 获取完整历史记录以便推送
+      
+    - name: 设置 Python 环境
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        
+    - name: 生成静态页面
+      run: |
+        echo "开始生成静态页面..."
+        python3 app.py --build-only
+        echo "静态页面生成完成"
+        
+    - name: 检查是否有文件变更
+      id: check-changes
+      run: |
+        # 强制添加生成的静态页面文件到暂存区（即使它们在 .gitignore 中）
+        git add -f index.html index.zh-cn.html
+        # 检查暂存区是否有变更
+        if [ -n "$(git diff --cached --name-only)" ]; then
+          echo "检测到静态页面文件有变更，准备提交..."
+          echo "has_changes=true" >> $GITHUB_OUTPUT
+        else
+          echo "没有文件变更，跳过提交"
+          echo "has_changes=false" >> $GITHUB_OUTPUT
+          # 重置暂存区，因为文件没有变更
+          git reset HEAD index.html index.zh-cn.html
+        fi
+        
+    - name: 提交生成的静态页面
+      if: steps.check-changes.outputs.has_changes == 'true'
+      run: |
+        echo "配置Git用户信息..."
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        echo "文件已在暂存区，准备提交..."
+        echo "提交更改..."
+        git commit -m "自动生成静态页面 [skip ci]" || exit 0
+        echo "推送到GitHub..."
+        git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main
+        echo "推送完成"
+
