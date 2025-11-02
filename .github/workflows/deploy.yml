@@ -24,6 +24,16 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: '3.11'
+        cache: 'pip'  # 缓存 pip 依赖，加速后续构建
+        
+    - name: 安装依赖
+      run: |
+        if [ -f requirements.txt ]; then
+          echo "检测到 requirements.txt，安装依赖..."
+          pip install -r requirements.txt
+        else
+          echo "未找到 requirements.txt，跳过依赖安装"
+        fi
         
     - name: 生成静态页面
       run: |
