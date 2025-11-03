@@ -1127,6 +1127,7 @@ che .b1 {
     transition: all 0.3s ease;
     left: 1px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    margin: 0;
 }
 
 /* 暗色主题时的切换状态 */
@@ -1253,6 +1254,40 @@ body a {
 
 [data-theme="dark"] #footer .link-list{
     filter: grayscale(1) brightness(0.5) invert(1);
+}
+
+/* 暗色主题下的搜索表单样式 */
+[data-theme="dark"] #search input {
+    background: var(--bg-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] #search input::placeholder {
+    color: var(--text-color);
+    opacity: 0.6;
+}
+
+[data-theme="dark"] #search input:focus {
+    background: var(--hover-bg);
+    border-color: var(--text-color);
+    color: var(--text-color-dark);
+}
+
+[data-theme="dark"] #search button {
+    color: var(--text-color);
+}
+
+[data-theme="dark"] #search button:hover {
+    color: var(--text-color-dark);
+}
+
+[data-theme="dark"] #search button svg {
+    fill: currentColor;
+}
+
+[data-theme="dark"] .site-search {
+    color: var(--text-color);
 }
 
 @media screen and (max-width: 481px) {
