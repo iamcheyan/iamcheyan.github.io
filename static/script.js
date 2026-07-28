@@ -1,189 +1,136 @@
+/* ============================================================
+   澈言 CHEYAN — 交互脚本（重构版）
+   主题切换 · 纪录片视频弹窗 · 事件照片弹窗
+   ============================================================ */
+(function () {
+    "use strict";
 
-// YouTube 视频模态框功能
-function openVideoModal() {
-	const modal = document.getElementById('video-modal');
-	const player = document.getElementById('youtube-player');
-	
-	// 使用澈言的纪录片视频
-	const videoId = 'nJZTpk1Lf_8'; // 澈言的纪录片视频
-	player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
-	
-	modal.style.display = 'block';
-	document.body.style.overflow = 'hidden'; // 防止背景滚动
-}
+    var THEME_KEY = "theme-preference";
+    var VIDEO_ID = "nJZTpk1Lf_8";
 
-function closeVideoModal() {
-	const modal = document.getElementById('video-modal');
-	const player = document.getElementById('youtube-player');
-	
-	modal.style.display = 'none';
-	player.src = ''; // 停止视频播放
-	document.body.style.overflow = 'auto'; // 恢复滚动
-}
-
-// 点击遮罩层关闭模态框
-document.addEventListener('click', function(event) {
-	const modal = document.getElementById('video-modal');
-	const modalContent = document.querySelector('.video-modal-content');
-	
-	if (event.target === modal && event.target !== modalContent) {
-		closeVideoModal();
-	}
-});
-
-// ESC 键关闭模态框
-document.addEventListener('keydown', function(event) {
-	if (event.key === 'Escape') {
-		closeVideoModal();
-	}
-});
-
-// 主题切换功能
-class ThemeManager {
-	constructor() {
-		this.themeToggle = null;
-		this.themeIcon = null;
-		this.currentTheme = 'light';
-		this.init();
-	}
-
-	init() {
-		// 等待DOM加载完成
-		if (document.readyState === 'loading') {
-			document.addEventListener('DOMContentLoaded', () => this.setupThemeToggle());
-		} else {
-			this.setupThemeToggle();
-		}
-	}
-
-	setupThemeToggle() {
-		this.themeToggle = document.getElementById('theme-toggle');
-		this.themeIcon = document.querySelector('.theme-icon');
-		
-		if (!this.themeToggle || !this.themeIcon) {
-			console.warn('主题切换按钮未找到');
-			return;
-		}
-
-		// 从localStorage读取保存的主题设置
-		this.loadSavedTheme();
-		
-		// 绑定点击事件
-		this.themeToggle.addEventListener('click', () => this.toggleTheme());
-		
-		// 不跟随系统主题变化：移除自动监听
-	}
-
-	loadSavedTheme() {
-		const savedTheme = localStorage.getItem('theme-preference');
-		if (savedTheme) {
-			this.setTheme(savedTheme);
-		} else {
-			// 默认浅色，不根据系统主题变更
-			this.setTheme('light');
-		}
-	}
-
-	setTheme(theme) {
-		this.currentTheme = theme;
-		
-		// 更新HTML的data-theme属性
-		document.documentElement.setAttribute('data-theme', theme);
-		
-		// 更新按钮图标
-		if (this.themeIcon) {
-			this.themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
-		}
-		
-		// 更新按钮的aria-label
-		if (this.themeToggle) {
-			this.themeToggle.setAttribute('aria-label', 
-				theme === 'dark' ? '切换到明亮主题' : '切换到暗色主题'
-			);
-		}
-		
-		// 保存到localStorage
-		localStorage.setItem('theme-preference', theme);
-		
-		// 触发自定义事件，其他组件可以监听
-		document.dispatchEvent(new CustomEvent('themeChanged', { 
-			detail: { theme: theme } 
-		}));
-	}
-
-	toggleTheme() {
-		const newTheme = this.currentTheme === 'light' ? 'dark' : 'light';
-		this.setTheme(newTheme);
-		
-		// 添加切换动画效果
-		if (this.themeToggle) {
-			this.themeToggle.style.transform = 'scale(0.9)';
-			setTimeout(() => {
-				this.themeToggle.style.transform = '';
-			}, 150);
-		}
-	}
-
-	getCurrentTheme() {
-		return this.currentTheme;
-	}
-}
-
-// 创建主题管理器实例
-const themeManager = new ThemeManager();
-
-// 将主题管理器暴露到全局，方便其他脚本使用
-window.themeManager = themeManager;
-(function(){
-  // 事件照片弹窗逻辑
-  function openEventPhotoModal(src, caption, title, date){
-    var modal = document.getElementById('event-photo-modal');
-    if(!modal) return;
-    var img = document.getElementById('event-photo-modal-img');
-    var titleEl = document.getElementById('event-photo-modal-title');
-    var descEl = document.getElementById('event-photo-modal-desc');
-    var dateEl = document.getElementById('event-photo-modal-date');
-    if(img){ img.src = src || ''; img.alt = caption || title || ''; }
-    if(titleEl){ titleEl.textContent = title || ''; }
-    // 允许描述渲染 HTML（例如 <br>）
-    if(descEl){ descEl.innerHTML = caption || ''; }
-    if(dateEl){ dateEl.textContent = date || ''; }
-    modal.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeEventPhotoModal(){
-    var modal = document.getElementById('event-photo-modal');
-    if(!modal) return;
-    modal.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  // 点击遮罩关闭
-  window.addEventListener('click', function(e){
-    var modal = document.getElementById('event-photo-modal');
-    if(modal && modal.classList.contains('open')){
-      if(e.target === modal){ closeEventPhotoModal(); }
+    /* ---------- 主题切换 / Theme ---------- */
+    function applyTheme(theme) {
+        document.documentElement.setAttribute("data-theme", theme);
+        var btn = document.getElementById("theme-toggle");
+        var icon = document.querySelector(".theme-icon");
+        if (icon) icon.textContent = theme === "dark" ? "☀️" : "🌙";
+        if (btn) {
+            btn.setAttribute("aria-label",
+                theme === "dark" ? "切换到明亮主题" : "切换到暗色主题");
+        }
     }
-  });
-  // ESC 关闭
-  window.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeEventPhotoModal(); });
-  // 关闭按钮
-  document.addEventListener('click', function(e){ if(e.target && e.target.classList && e.target.classList.contains('photo-close')) closeEventPhotoModal(); });
 
-  // 事件图片点击打开弹窗
-  document.addEventListener('click', function(e){
-    var fig = e.target.closest && e.target.closest('.event-photo-figure');
-    if(!fig) return;
-    var src = fig.getAttribute('data-photo') || (fig.querySelector('img') ? fig.querySelector('img').src : '');
-    var caption = fig.getAttribute('data-caption') || (function(){
-      var capEl = fig.querySelector('.event-photo-caption');
-      // 回退读取 figcaption 的 HTML，以支持内联换行等
-      return capEl ? capEl.innerHTML : '';
-    })();
-    var title = fig.getAttribute('data-title') || '';
-    var date = fig.getAttribute('data-date') || '';
-    openEventPhotoModal(src, caption, title, date);
-  });
+    function savedTheme() {
+        try {
+            var t = localStorage.getItem(THEME_KEY);
+            return t === "dark" || t === "light" ? t : "light";
+        } catch (e) {
+            return "light";
+        }
+    }
+
+    function initTheme() {
+        applyTheme(savedTheme());
+        var btn = document.getElementById("theme-toggle");
+        if (!btn) return;
+        btn.addEventListener("click", function () {
+            var next = document.documentElement.getAttribute("data-theme") === "dark"
+                ? "light" : "dark";
+            applyTheme(next);
+            try { localStorage.setItem(THEME_KEY, next); } catch (e) {}
+            btn.style.transform = "scale(0.9)";
+            setTimeout(function () { btn.style.transform = ""; }, 150);
+        });
+    }
+
+    /* ---------- 视频弹窗 / Video modal ---------- */
+    function openVideoModal() {
+        var modal = document.getElementById("video-modal");
+        var player = document.getElementById("youtube-player");
+        if (!modal || !player) return;
+        player.src = "https://www.youtube.com/embed/" + VIDEO_ID + "?autoplay=1&rel=0";
+        modal.style.display = "block";
+        document.body.style.overflow = "hidden";
+    }
+
+    function closeVideoModal() {
+        var modal = document.getElementById("video-modal");
+        var player = document.getElementById("youtube-player");
+        if (!modal) return;
+        modal.style.display = "none";
+        if (player) player.src = "";
+        document.body.style.overflow = "auto";
+    }
+
+    window.openVideoModal = openVideoModal;
+    window.closeVideoModal = closeVideoModal;
+
+    /* ---------- 事件照片弹窗 / Event photo modal ---------- */
+    function openEventPhotoModal(src, caption, title, date) {
+        var modal = document.getElementById("event-photo-modal");
+        if (!modal) return;
+        var img = document.getElementById("event-photo-modal-img");
+        var titleEl = document.getElementById("event-photo-modal-title");
+        var descEl = document.getElementById("event-photo-modal-desc");
+        var dateEl = document.getElementById("event-photo-modal-date");
+        if (img) { img.src = src || ""; img.alt = caption || title || ""; }
+        if (titleEl) titleEl.textContent = title || "";
+        if (descEl) descEl.innerHTML = caption || ""; // 允许 <br> 等内联标记
+        if (dateEl) dateEl.textContent = date || "";
+        modal.classList.add("open");
+        document.body.style.overflow = "hidden";
+    }
+
+    function closeEventPhotoModal() {
+        var modal = document.getElementById("event-photo-modal");
+        if (!modal) return;
+        modal.classList.remove("open");
+        document.body.style.overflow = "auto";
+    }
+
+    /* ---------- 事件委托 / Global delegation ---------- */
+    document.addEventListener("click", function (event) {
+        // 视频弹窗：点击遮罩关闭
+        var videoModal = document.getElementById("video-modal");
+        if (videoModal && videoModal.style.display === "block" && event.target === videoModal) {
+            closeVideoModal();
+            return;
+        }
+        // 事件照片：点击遮罩或关闭按钮关闭
+        var photoModal = document.getElementById("event-photo-modal");
+        if (photoModal && photoModal.classList.contains("open")) {
+            if (event.target === photoModal ||
+                (event.target.classList && event.target.classList.contains("photo-close"))) {
+                closeEventPhotoModal();
+                return;
+            }
+        }
+        // 事件照片：点击图片打开
+        var fig = event.target.closest && event.target.closest(".event-photo-figure");
+        if (fig) {
+            var src = fig.getAttribute("data-photo") ||
+                (fig.querySelector("img") ? fig.querySelector("img").src : "");
+            var caption = fig.getAttribute("data-caption") || (function () {
+                var capEl = fig.querySelector(".event-photo-caption");
+                return capEl ? capEl.innerHTML : "";
+            })();
+            openEventPhotoModal(src, caption,
+                fig.getAttribute("data-title") || "",
+                fig.getAttribute("data-date") || "");
+        }
+    });
+
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            closeVideoModal();
+            closeEventPhotoModal();
+        }
+    });
+
+    /* ---------- 启动 / Init ---------- */
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initTheme);
+    } else {
+        initTheme();
+    }
 })();
-

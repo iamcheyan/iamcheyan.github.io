@@ -1,20 +1,17 @@
 <!DOCTYPE html>
 <!-- http://iamcheyan.com/ -->
 <html lang="zh-cn">
-<!-- ホームページ -->
 
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
 <title>🧐&nbsp;&nbsp;&nbsp;IAM CHEYAN</title>
-<meta name="msvalidate.01" content="0499E923E38639F1D120EAAA3953A529" />	<!--Bing分類-->
+<meta name="msvalidate.01" content="0499E923E38639F1D120EAAA3953A529">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="renderer" content="webkit">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <meta name="keywords" content="澈言">
 <meta name="description" content="澈言的个人网站">
-<meta name="viewport" content="width=device-width">
 <link rel="stylesheet" href="static/che.css">
-<script src="static/jquery.min.js"></script>
 <script src="static/script.js"></script>
 <link rel="icon" href="static/favicon.ico" type="image/x-icon">
 <!-- 百度统计 -->
@@ -32,7 +29,7 @@
 <body>
 
 <div id="page" class="blog-page">
-	<!-- ヘッダー -->
+	<!-- 顶栏：语言切换 + 主题切换 -->
 	<div id="topbar">
 		<a href="/index.html" class="on">日本語</a>
 		<a href="/index.zh-cn.html">中文</a>
@@ -65,9 +62,8 @@
 		</ul>
 	</nav>
 
-	<!-- 事件照片横幅占位已移除，改为在对应事件条目内部渲染 -->
 	
-	<!-- 私について -->
+	<!-- 关于我 -->
 	<div class="box about">
 		<div class="text">
 			<h3 id="about-me-title"></h3>
@@ -84,7 +80,7 @@
 				</div>
 			</div>
 		</div>
-		<!-- 連絡先 -->
+		<!-- 联系方式 / 搜索 / 纪录片 -->
 		<div class="contact">
 			<nav>
 				<div class="site-search kit-hidden-tb">
@@ -112,7 +108,7 @@
 				</div>
 			</div>
 			
-			<!-- 動画モーダル -->
+			<!-- 视频弹窗 -->
 			<div id="video-modal" class="video-modal">
 				<div class="video-modal-content">
 					<span class="video-close" onclick="closeVideoModal()">&times;</span>
@@ -136,13 +132,13 @@
 			</p>
 		</div>
 	</div>
-	<!-- プロジェクト -->
+	<!-- 项目 -->
 	<div class="box project-list" id="web-project-list">
 		<h3 id="projects-books-title"></h3>
 		<div class="c" id="web-project-items"></div>
 	</div>
 	<!-- 出版物 -->
-	<div class="box project-list" id="book-list" data-box=".book">
+	<div class="box project-list" id="book-list">
 		<h3 id="books-title"></h3>
 		<div class="c" id="project-items"></div>
 		<p class="link" id="books-platforms"></p>
@@ -171,7 +167,7 @@
         </div>
     </div>
 }</div>
-<!-- フッター -->
+<!-- 页脚 -->
 <footer id="footer">
 	<div class="c">
 		<div class="other">

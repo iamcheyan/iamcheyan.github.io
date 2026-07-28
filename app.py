@@ -81,28 +81,6 @@ def indent_html(html_snippet: str, prefix: str) -> str:
     return indent(html_snippet.strip(), prefix, lambda _: True)
 
 
-def render_event_photo_banner(events: list[dict]) -> str:
-    """从 events 中选择第一个同时包含 photo 与 caption 的项，渲染为横幅。"""
-    for block in events:
-        items = block.get("items", [])
-        for item in items:
-            photo = item.get("photo")
-            caption = item.get("caption")
-            if photo and caption:
-                photo_attr = html_attr(photo)
-                caption_text = html_text(caption)
-                return (
-                    """
-		<section class="event-photo-banner-section">
-					<figure class="event-photo-figure" role="button" tabindex="0" data-photo="{photo}" data-caption="{caption}">
-				<img class="event-photo-img" src="{photo}" alt="{caption}">
-				<figcaption class="event-photo-caption">{caption}</figcaption>
-			</figure>
-		</section>
-                    """.format(photo=photo_attr, caption=caption_text).strip("\n")
-                )
-    return ""
-
 
 def replace_template_placeholders(template: str, data: dict, lang_config: dict) -> str:
     """Replace placeholders in template with actual data."""
@@ -139,46 +117,31 @@ def replace_template_placeholders(template: str, data: dict, lang_config: dict) 
         'video-alt': data.get("video", {}).get("alt", ""),
     }
     
+    # 内容含 HTML 标记、无需转义的字段
+    html_fields = {
+        'about-me-title', 'about-me-content', 'contact-title',
+        'projects-books-title', 'books-title', 'projects-title',
+        'events-title', 'video-title',
+    }
+
     for element_id, content in replacements.items():
-        if content:
-            # 定义包含HTML标签的字段，这些字段不需要HTML转义
-            html_fields = ['about-me-title', 'about-me-content', 'contact-title', 'projects-books-title', 'books-title', 'projects-title', 'events-title', 'video-title']
-            
-            # 特殊处理 img 标签的 alt 属性
-            if element_id == 'video-alt':
-                template = re.sub(
-                    rf'(<img[^>]*id="{element_id}"[^>]*alt=")[^"]*(")',
-                    rf'\1{html_attr(content)}\2',
-                    template
-                )
-            elif element_id in html_fields:
-                # 对于包含HTML标签的内容，不进行转义
-                # 处理自闭合标签和普通标签
-                template = re.sub(
-                    rf'(<[^>]*id="{element_id}"[^>]*>)(</[^>]*>)',
-                    rf'\1{content}\2',
-                    template
-                )
-                # 处理自闭合标签（如 <a> 标签）
-                template = re.sub(
-                    rf'(<[^>]*id="{element_id}"[^>]*>)(\s*</[^>]*>)',
-                    rf'\1{content}\2',
-                    template
-                )
-            else:
-                # 对于纯文本内容，进行HTML转义
-                # 处理自闭合标签和普通标签
-                template = re.sub(
-                    rf'(<[^>]*id="{element_id}"[^>]*>)(</[^>]*>)',
-                    rf'\1{html_text(content)}\2',
-                    template
-                )
-                # 处理自闭合标签（如 <a> 标签）
-                template = re.sub(
-                    rf'(<[^>]*id="{element_id}"[^>]*>)(\s*</[^>]*>)',
-                    rf'\1{html_text(content)}\2',
-                    template
-                )
+        if not content:
+            continue
+        if element_id == 'video-alt':
+            # img 的 alt 属性单独处理
+            template = re.sub(
+                rf'(<img[^>]*id="{element_id}"[^>]*alt=")[^"]*(")',
+                rf'\1{html_attr(content)}\2',
+                template,
+            )
+        else:
+            value = content if element_id in html_fields else html_text(content)
+            # 单条正则同时覆盖“无内容标签”与“含空白自闭合标签”（如 <a …>\n</a>）
+            template = re.sub(
+                rf'(<[^>]*id="{element_id}"[^>]*>)(\s*</[^>]*>)',
+                rf'\1{value}\2',
+                template,
+            )
     
     # 替换链接属性
     twitter_link = data.get("contact", {}).get("twitter_link", "#")
@@ -194,13 +157,6 @@ def replace_template_placeholders(template: str, data: dict, lang_config: dict) 
         github_link_text = data.get("github_project_link", "GitHub Repository")
         template = re.sub(r'(<a[^>]*id="github-project-link"[^>]*>)[^<]*(</a>)', rf'\1{html_text(github_link_text)}\2', template)
     
-    # 注入事件照片横幅（若存在）
-    events_years = data.get("events", {}).get("years", [])
-    banner_html = render_event_photo_banner(events_years)
-    if banner_html:
-        _indent_banner = indent_html(banner_html, "\t\t")
-        template = re.sub(r'(<div class="event-photo-banner" id="event-photo-banner">)(</div>)', rf'\1\n{_indent_banner}\n\t\t\2', template)
-
     # 生成并替换项目列表
     web_projects_html = render_web_projects(data.get("web_project_list", []))
     books_html = render_books(data.get("books", {}).get("list", []))
